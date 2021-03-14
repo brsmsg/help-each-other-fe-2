@@ -1,6 +1,5 @@
 import { render } from 'react-dom';
 import { defineConfig } from 'umi';
-import { extend} from 'umi-request'
 
 export default defineConfig({
   nodeModulesTransform: {
@@ -13,7 +12,7 @@ export default defineConfig({
       routes: [
         {
           path: '/',
-          redirect : '/home'
+          redirect: '/home'
         },
         {
           path: '/home',
@@ -24,4 +23,7 @@ export default defineConfig({
     },
   ],
   fastRefresh: {},
+  dva: {
+    // immer: true,
+  }
 });

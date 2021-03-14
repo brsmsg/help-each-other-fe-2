@@ -3,7 +3,7 @@ import style from '@/assets/gloabalStyle';
 
 export const LoginWrapper = styled.div`
 width: 270px;
-height: 250px;
+height: 300px;
 position: absolute;
 padding: 20px;
 background-color: white;
@@ -18,6 +18,13 @@ display: ${(props: { login: boolean }) => props.login ? "" : "none"} ;
 div{
   display: flex;
   flex-direction: column;
+  position: relative;
+  i{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+  }
   h1{
     margin-bottom: 20px;
     color: ${style["theme-color"]};
@@ -46,12 +53,22 @@ div{
     background-color:${style["theme-color"]};
     cursor: pointer
   }
+  .to_register{
+    line-height:12px;
+    font-size: 12px;
+    margin-top:10px;
+    display: inline-block;
+    span{
+      color: ${style["theme-color"]};
+      cursor: pointer
+    }
+  }
   .protocal{
     display: block;
-    line-height: 13px;
+    line-height: 12px;
     height: 20px;
     font-size: 12px;
-    margin-top: 20px;
+    margin-top: 10px;
     a{
       color: ${style["theme-color"]};
       cursor: pointer;

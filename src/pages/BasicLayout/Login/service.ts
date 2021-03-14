@@ -1,12 +1,9 @@
 import { request } from 'umi'
 
-export const loginRequest = async (username: string, password: string) => {
+export const loginRequest = async (params: { username: string, password: string }) => {
   const requestConfig = {
     method: 'POST',
-    data: {
-      username,
-      password
-    }
+    data: params
   };
   return request('users/login', requestConfig);
 }
