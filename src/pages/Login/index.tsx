@@ -4,18 +4,18 @@ import { loginRequest } from './service';
 import { connect, LoginModelState, Loading } from 'umi';
 
 interface loginProps {
-  loginModel: LoginModelState;
-  loading: boolean;
+  loginModel?: LoginModelState;
+  loading?: boolean;
   dispatch: Function;
   show: boolean;
   status: boolean;  //true 登陆 false 注册
   toggleShow: (status: boolean) => void;
-  toRegister: () => void  //跳转注册
+  toggleStatus: () => void;
 }
 
 const Login: React.FC<loginProps> = (props) => {
   const { show, loginModel, status } = props;
-  const { toggleShow, dispatch, toRegister } = props;
+  const { toggleShow, dispatch, toggleStatus } = props;
 
   const usernameRef = useRef<HTMLInputElement>(null);
   const pwdRef = useRef<HTMLInputElement>(null);
@@ -49,7 +49,7 @@ const Login: React.FC<loginProps> = (props) => {
           登陆
         </button>
         <div className="to_register">
-          还没有账号？<span onClick={toRegister}>注册</span>
+          还没有账号？<span onClick={toggleStatus}>注册</span>
         </div>
         <div className="protocal">
           注册登陆即表示同意 <a>用户协议、隐私政策</a>

@@ -2,6 +2,13 @@ import { render } from 'react-dom';
 import { defineConfig } from 'umi';
 
 export default defineConfig({
+  locale: {
+    default: 'zh-CN',
+    antd: false,
+    title: false,
+    baseNavigator: true,
+    baseSeparator: '-',
+  },
   nodeModulesTransform: {
     type: 'none',
   },
@@ -24,6 +31,6 @@ export default defineConfig({
   ],
   fastRefresh: {},
   dva: {
-    // immer: true,
+    immer: true,
   }
 });
