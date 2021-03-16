@@ -6,6 +6,7 @@ import { UserOutlined } from '@ant-design/icons';
 import Login from '../Login'
 import NavBar from '../../components/NavBar'
 import { IconStyle } from '../../assets/iconfont/iconfont';
+import { GlobalStyle } from '@/assets/gloabalStyle'
 
 const BasicLayout: React.FC<RouteComponentProps> = (props) => {
   // const { location } = props;
@@ -22,6 +23,7 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
 
   return (
     <>
+      <GlobalStyle></GlobalStyle>
       <IconStyle></IconStyle>
       <TopBar>
         <span>标题logo</span>

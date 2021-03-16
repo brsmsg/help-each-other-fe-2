@@ -7,6 +7,7 @@ export const NavBarWrapper = styled.div`
   border-top: 2px ${style["border-color"]} solid;
   border-bottom: 2px ${style["border-color"]} solid;
   color: ${style["text-color-shallow"]};
+  background-color: #ffffff;
   .nav_bar{
     width: 80%;
     height: 100%;
