@@ -7,6 +7,7 @@ import Login from '../Login'
 import NavBar from '../../components/NavBar'
 import { IconStyle } from '../../assets/iconfont/iconfont';
 import { GlobalStyle } from '@/assets/gloabalStyle'
+import { Link } from '@umijs/runtime';
 
 const BasicLayout: React.FC<RouteComponentProps> = (props) => {
   // const { location } = props;
@@ -26,7 +27,7 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
       <GlobalStyle></GlobalStyle>
       <IconStyle></IconStyle>
       <TopBar>
-        <span>标题logo</span>
+        <Link to="/"><div>标题logo</div></Link>
         <div className="nav_bar">
         </div>
         <div className="avatar_wrapper" onClick={() => { setIsShow(true) }}>

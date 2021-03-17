@@ -25,6 +25,10 @@ export default defineConfig({
           path: '/home',
           exact: true,
           component: 'Home'
+        },
+        {
+          path: '/post/:id',
+          component: 'PostDetail'
         }
       ]
     },

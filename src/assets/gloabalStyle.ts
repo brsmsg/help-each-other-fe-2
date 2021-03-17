@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components"
+import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -51,11 +51,12 @@ export const GlobalStyle = createGlobalStyle`
 		text-decoration: none;
 		color: #fff;
 	}
-`
+`;
 
 export default {
-  "theme-color": "#27bb9b",
-  "border-color": '#f1f1f1',
-  "text-color-theme": "#25bb9b",
-  "text-color-shallow": '#71777c'
-}
+  'theme-color': '#27bb9b',
+  'border-color': '#f1f1f1',
+  'text-color-theme': '#25bb9b',
+  'text-color-shallow': '#b2bac2',
+  'text-color-deep': '#71777c',
+};
