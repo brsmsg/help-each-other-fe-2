@@ -9,11 +9,11 @@ export const NavBarWrapper = styled.div`
   color: ${style["text-color-shallow"]};
   background-color: #ffffff;
   .nav_bar{
-    width: 80%;
+    width: 1200px;
     height: 100%;
     margin: 0 auto;
     display: flex;
-    justify-content: space-around;
+    justify-content: start;
     align-items: center;
 
     .active{
@@ -27,5 +27,6 @@ export const NavBarItem = styled.div`
   height: 45px;
   font-size: 15px;
   line-height: 45px;
-  cursor: pointer
+  cursor: pointer;
+  margin: 0 30px;
 `

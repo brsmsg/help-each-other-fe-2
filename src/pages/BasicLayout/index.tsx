@@ -4,7 +4,6 @@ import { Musk, TopBar } from './style';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import Login from '../Login'
-import NavBar from '../../components/NavBar'
 import { IconStyle } from '../../assets/iconfont/iconfont';
 import { GlobalStyle } from '@/assets/gloabalStyle'
 import { Link } from '@umijs/runtime';
@@ -34,7 +33,6 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
           <Avatar size={40} icon={<UserOutlined />} />
         </div>
       </TopBar >
-      <NavBar></NavBar>
       <Musk onClick={() => toggleShow(false)} show={isShow} />
       <Login show={isShow} toggleShow={toggleShow} status={status} toggleStatus={toggleStatus} />
       { props.children}
