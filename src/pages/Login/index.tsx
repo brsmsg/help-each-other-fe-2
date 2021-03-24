@@ -8,7 +8,7 @@ interface loginProps {
   loading?: boolean;
   dispatch: Function;
   show: boolean;
-  status: boolean;  //true 登陆 false 注册
+  status: boolean; //true 登陆 false 注册
   toggleShow: (status: boolean) => void;
   toggleStatus: () => void;
 }
@@ -23,31 +23,40 @@ const Login: React.FC<loginProps> = (props) => {
     let username: string = usernameRef.current?.value as string;
     let password: string = pwdRef.current?.value as string;
     // 组装payload
-    let payload = { username, password }
+    let payload = { username, password };
     // dispatch异步请求
     dispatch({
       type: 'login/login',
-      payload
-    })
+      payload,
+    });
     toggleShow(false);
-  }
+  };
 
   return (
     <LoginWrapper login={show}>
       <div>
-        <i className="iconfont" onClick={() => toggleShow(false)}>&#xe61a;</i>
+        <i className="iconfont" onClick={() => toggleShow(false)}>
+          &#xe61a;
+        </i>
         <h1>账号登陆</h1>
         <div className="input_group">
           <div className="username">
-            <input placeholder="请输入用户名" className="username" ref={usernameRef} />
+            <input
+              placeholder="请输入用户名"
+              className="username"
+              ref={usernameRef}
+            />
           </div>
           <div className="pwd">
-            <input placeholder="请输入密码" className="pwd" ref={pwdRef} type="password" />
+            <input
+              placeholder="请输入密码"
+              className="pwd"
+              ref={pwdRef}
+              type="password"
+            />
           </div>
         </div>
-        <button onClick={login}>
-          登陆
-        </button>
+        <button onClick={login}>登陆</button>
         <div className="to_register">
           还没有账号？<span onClick={toggleStatus}>注册</span>
         </div>
@@ -56,11 +65,13 @@ const Login: React.FC<loginProps> = (props) => {
         </div>
       </div>
     </LoginWrapper>
-  )
-}
+  );
+};
 
 // export default Login;
-export default connect(({ login, loading }: { login: LoginModelState, loading: Loading }) => ({
-  login,
-  loading: loading.models.login
-}))(Login);
+export default connect(
+  ({ login, loading }: { login: LoginModelState; loading: Loading }) => ({
+    login,
+    loading: loading.models.login,
+  }),
+)(Login);

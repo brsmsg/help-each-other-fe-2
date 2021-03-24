@@ -1,26 +1,29 @@
 import styled from 'styled-components';
 
-export const TopBar = styled.div`
+export const TopBarWrapper = styled.div`
   height: 50px;
-  /* background-color: black; */
-  /* width: 100%px; */
-  width: 1200px;
-  display: flex;
-  justify-content: space-around;
-  line-height: 30px;
-  margin: 0 auto;
-  span {
-  }
-  .nav_bar {
-    background-color: red;
+  background-color: #fff;
+  width: 100%px;
+  .top_bar {
+    width: 1200px;
     height: 100%;
-    width: 80%;
-    margin: 0 auto;
     display: flex;
-  }
-  .avatar_wrapper {
-    align-self: center;
-    margin-right: 10px;
+    justify-content: space-around;
+    line-height: 30px;
+    margin: 0 auto;
+    span {
+    }
+    .nav_bar {
+      background-color: red;
+      height: 100%;
+      width: 80%;
+      margin: 0 auto;
+      display: flex;
+    }
+    .avatar_wrapper {
+      align-self: center;
+      margin-right: 10px;
+    }
   }
 `;
 

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import style from '@/assets/gloabalStyle';
 
 export const HomeWrapper = styled.div`
-  width: 80%;
+  width: 1200px;
   height: 100px;
   margin: 10px auto;
   position: relative;
