@@ -4,7 +4,7 @@ import { LoginModelState } from 'umi';
 import LoginModel from '../Login/model';
 
 export interface PostModelState {
-  id: number | undefined;
+  id: string;
   title: string | null;
   content: string | null;
   images: string | null;
@@ -32,7 +32,7 @@ export interface PostModelType {
 const PostModel: PostModelType = {
   namespace: 'post',
   state: {
-    id: undefined,
+    id: '',
     title: '',
     content: '',
     images: '',
@@ -53,7 +53,7 @@ const PostModel: PostModelType = {
         });
         // 获取用户统计
         const { id: userId } = res.data.user;
-        console.log(userId)
+        console.log(userId);
         const AuthorRes = yield call(authorStatRequest, { userId });
         console.log(AuthorRes);
         if (AuthorRes.errno === 0) {
@@ -62,7 +62,6 @@ const PostModel: PostModelType = {
             payload: AuthorRes.data,
           });
         }
-
       }
     },
   },

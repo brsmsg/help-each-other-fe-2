@@ -19,6 +19,7 @@ const Home: React.FC<HomeProps> = (props) => {
       user: {
         username: 'kbh',
       },
+      tag: '123',
     },
     {
       id: 2,
@@ -33,6 +34,7 @@ const Home: React.FC<HomeProps> = (props) => {
       user: {
         username: 'kbh',
       },
+      tag: '234',
     },
   ];
   const handlePostClick = (id: number) => {
@@ -50,7 +52,10 @@ const Home: React.FC<HomeProps> = (props) => {
           <div className="postWrapper">
             {posts.map((item) => {
               return (
-                <PostItem onClick={() => handlePostClick(item.id)}>
+                <PostItem
+                  onClick={() => handlePostClick(item.id)}
+                  key={item.id}
+                >
                   <div className="item_left">
                     <div className="title">{item.title}</div>
                     <ul className="post_info">
@@ -61,6 +66,9 @@ const Home: React.FC<HomeProps> = (props) => {
                         <div className="create_at">
                           {new Date(item.createdAt).toLocaleTimeString()}
                         </div>
+                      </li>
+                      <li>
+                        <div className="tag">{item.tag}</div>
                       </li>
                     </ul>
 

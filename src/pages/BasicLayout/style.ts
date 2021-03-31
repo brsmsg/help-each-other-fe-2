@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import style from '@/assets/gloabalStyle';
 
 export const TopBarWrapper = styled.div`
   height: 50px;
@@ -11,14 +12,21 @@ export const TopBarWrapper = styled.div`
     justify-content: space-around;
     line-height: 30px;
     margin: 0 auto;
-    span {
-    }
     .nav_bar {
-      background-color: red;
+      /* background-color: red; */
       height: 100%;
       width: 80%;
       margin: 0 auto;
       display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      div {
+        color: ${style['text-color-deep']};
+        margin: 0 20px;
+        &.active {
+          color: ${style['theme-color']};
+        }
+      }
     }
     .avatar_wrapper {
       align-self: center;

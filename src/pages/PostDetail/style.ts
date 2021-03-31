@@ -32,6 +32,11 @@ export const PostWrapper = styled.div`
         margin: 30px 0;
         padding: 10px 0;
         border-top: 2px ${style['border-color']} solid;
+        text-align: center;
+        h1 {
+          margin-bottom: 10px;
+          font-weight: bolder;
+        }
       }
     }
   }

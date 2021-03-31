@@ -22,3 +22,30 @@ export const participantsRequest = async (params: { id: string }) => {
     params,
   };
 };
+
+export const applyRequest = async (params: {
+  applicantId: string;
+  postId: string;
+  text: string;
+}) => {
+  const { applicantId, postId, text } = params;
+  const requestConfig = {
+    method: 'POST',
+    data: {
+      applicantId,
+      text,
+    },
+  };
+  return request(`post/apply/${postId}`, requestConfig);
+};
+
+export const getApplyStatus = async (params: {
+  postId: string;
+  applicantId: string;
+}) => {
+  const requestConfig = {
+    method: 'GET',
+    params,
+  };
+  return request(`post/apply/status`, requestConfig);
+};

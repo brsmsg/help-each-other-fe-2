@@ -2,24 +2,23 @@ import { Effect, ImmerReducer } from 'umi';
 import { loginRequest } from './service';
 
 export interface LoginModelState {
-  id: number | undefined,
-  username: string,
-  gender: string,
-  avatar: string | null,
-  category: string | null,
-  location: string | null,
+  id: number | undefined;
+  username: string;
+  gender: string;
+  avatar: string | null;
+  category: string | null;
+  location: string | null;
 }
 
 export interface LoginModelType {
-  namespace: 'login',
-  state: LoginModelState,
+  namespace: 'login';
+  state: LoginModelState;
   effects: {
-    login: Effect
-  },
+    login: Effect;
+  };
   reducers: {
-    changeLoginStatus: ImmerReducer<LoginModelState>
-  }
-
+    changeLoginStatus: ImmerReducer<LoginModelState>;
+  };
 }
 
 const LoginModel: LoginModelType = {
@@ -35,23 +34,24 @@ const LoginModel: LoginModelType = {
   effects: {
     // call 执行异步函数， put 发出action，类似dispatch
     // 异步发起登陆请求
-    * login({ payload }, { call, put }) {
+    *login({ payload }, { call, put }) {
       console.log(payload);
       const res = yield call(loginRequest, payload);
       console.log('res', res);
       if (res.errno === 0) {
+        window.localStorage.setItem('userId', res.data.id);
         yield put({
           type: 'changeLoginStatus',
-          payload: res.data
-        })
+          payload: res.data,
+        });
       }
-    }
+    },
   },
   reducers: {
     changeLoginStatus(state, { payload }) {
-      return { ...state, ...payload }
-    }
-  }
-}
+      return { ...state, ...payload };
+    },
+  },
+};
 
 export default LoginModel;

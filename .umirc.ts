@@ -19,22 +19,26 @@ export default defineConfig({
       routes: [
         {
           path: '/',
-          redirect: '/home'
+          redirect: '/home',
         },
         {
           path: '/home',
           exact: true,
-          component: 'Home'
+          component: 'Home',
         },
         {
           path: '/post/:id',
-          component: 'PostDetail'
-        }
-      ]
+          component: 'PostDetail',
+        },
+        {
+          path: 'writePost',
+          component: 'PostForm',
+        },
+      ],
     },
   ],
   fastRefresh: {},
   dva: {
     immer: true,
-  }
+  },
 });

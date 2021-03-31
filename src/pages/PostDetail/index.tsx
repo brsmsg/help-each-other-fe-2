@@ -1,11 +1,16 @@
-import React, { useEffect } from 'react';
+import React, {
+  TextareaHTMLAttributes,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { RouteComponentProps } from 'react-router';
 import { PostWrapper, PostDetailWrapper } from './style';
-import { Avatar, Card, List, Input, Button } from 'antd';
-import { connect, Loading } from 'umi';
+import { Avatar, Card, List, Input, Button, message } from 'antd';
+import { connect, Loading, useRequest } from 'umi';
 import { PostModelState } from './model';
-import { participantsRequest } from './service';
-
+import { participantsRequest, applyRequest, getApplyStatus } from './service';
+import { getUserId } from '@/utils/currentUser';
 interface PostDetail extends RouteComponentProps {
   post: PostModelState;
   loading: boolean;
@@ -18,7 +23,10 @@ const PostDetail: React.FC<PostDetail> = (props) => {
 
   const { match, post, loading } = props;
   const { dispatch } = props;
-  
+
+  const [text, setText] = useState('');
+  const [applyStatus, setApplyStatus] = useState(0);
+  const [isAuthor, setIsAuthor] = useState(false);
 
   useEffect(() => {
     const { id } = match.params as any;
@@ -28,7 +36,22 @@ const PostDetail: React.FC<PostDetail> = (props) => {
         id,
       },
     });
+  }, []);
 
+  useEffect(() => {
+    const currentId = getUserId();
+    const { id: postId } = match.params as any;
+    const getStatus = async () => {
+      const res = await getApplyStatus({ postId, applicantId: currentId });
+      if (res.errno === 0) {
+        const { is_accept } = res.data;
+        if (is_accept) setApplyStatus(2);
+        else setApplyStatus(1);
+      } else {
+        setApplyStatus(0);
+      }
+    };
+    getStatus();
   }, []);
 
   const data = [
@@ -46,6 +69,53 @@ const PostDetail: React.FC<PostDetail> = (props) => {
     },
   ];
 
+  const handleTextChange = (e: any) => {
+    const value = e.target.value;
+    setText(value);
+  };
+
+  const handleOfferHelp = async () => {
+    const res = await applyRequest({
+      // applicantId: getUserId(),
+      applicantId: '1',
+      postId: post.id,
+      text,
+    });
+    if (res.errno === 0) {
+      message.success('申请已发送');
+      setApplyStatus(1);
+    } else {
+      message.error('申请失败，清重试');
+    }
+  };
+
+  const applyComponent = () => {
+    let content;
+    switch (applyStatus) {
+      case 0:
+        content = (
+          <>
+            <h1>请输入申请信息</h1>
+            <TextArea
+              allowClear
+              autoSize={{ minRows: 3, maxRows: 5 }}
+              onChange={(e: any) => handleTextChange(e)}
+            />
+            <Button style={{ marginTop: '20px' }} onClick={handleOfferHelp}>
+              我要帮他
+            </Button>
+          </>
+        );
+        break;
+      case 1:
+        content = <h1>等待审核</h1>;
+        break;
+      case 2:
+        content = <h1>审核通过，已经加入</h1>;
+    }
+    return content;
+  };
+
   return (
     <PostWrapper>
       <Card
@@ -58,10 +128,16 @@ const PostDetail: React.FC<PostDetail> = (props) => {
               <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
             }
             title={post.user?.username}
-            description="This is the description"
+            description={
+              <>
+                <span>发布于: {post.createdAt} </span>
+                <span>
+                  报酬: {post.reward ? `¥${post.reward}` : '自行商议'}
+                </span>
+              </>
+            }
           ></Meta>
         }
-        // actions={[<div className="offer_help">我要帮他！</div>]}
       >
         <div className="post_body">
           <div className="title">{post?.title}</div>
@@ -73,11 +149,9 @@ const PostDetail: React.FC<PostDetail> = (props) => {
             内容内容内容内容内容内容内容内容内容内容内容内容内容内容 */}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{post.content}
           </div>
-          <div className="offer_help">
-            <span>请输入申请信息</span>
-            <TextArea allowClear autoSize={{ minRows: 3, maxRows: 5 }} />
-            <Button style={{ marginTop: '20px' }}>我要帮他</Button>
-          </div>
+          {getUserId() === post.user?.id?.toString() ? null : (
+            <div className="offer_help">{applyComponent()}</div>
+          )}
         </div>
       </Card>
       {/* <AuthorDetailWrapper></AuthorDetailWrapper> */}
@@ -86,8 +160,8 @@ const PostDetail: React.FC<PostDetail> = (props) => {
           avatar={
             <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
           }
-          title="Card title"
-          description="This is the description"
+          title={post.user?.username}
+          description={<span></span>}
         ></Meta>
         <div className="stat">
           所属区域：{(post.authorStat as any)?.location}
