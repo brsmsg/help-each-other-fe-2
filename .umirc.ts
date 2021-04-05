@@ -34,6 +34,10 @@ export default defineConfig({
           path: 'writePost',
           component: 'PostForm',
         },
+        {
+          path: '/userInfo/:id',
+          component: 'UserInfo'
+        }
       ],
     },
   ],

@@ -1,43 +1,14 @@
 import styled from 'styled-components';
 import style from '@/assets/gloabalStyle';
 
-export const HomeWrapper = styled.div`
-  width: 960px;
-  /* height: 100px; */
-  margin: 10px auto;
-  position: relative;
-`;
-
-export const PostListWrapper = styled.div`
-  width: 75%;
-  /* height: 1000px; */
-  background-color: #ffffff;
-  position: absolute;
-  left: 0;
-  top: 0;
-  .post_header {
-    width: 100%;
-    height: 40px;
-    border-bottom: 2px ${style['border-color']} solid;
-    line-height: 40px;
-    font-size: 13px;
-    span {
-      padding: 0 20px;
-      color: ${style['text-color-shallow']};
-      cursor: pointer;
-      :first-child {
-        border-right: 1px solid ${style['text-color-shallow']};
-      }
-      &.active {
-        color: ${style['theme-color']};
-      }
-    }
-  }
+export const ListWrapper = styled.div`
+  background-color: #fff;
+  width: 700px;
 `;
 
 export const PostItem = styled.div`
   width: 100%;
-  height: 130px;
+  height: 120px;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
@@ -50,13 +21,18 @@ export const PostItem = styled.div`
     padding: 10px 50px;
     .title {
       margin-top: 10px;
-      font-size: 25px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      :hover {
+        cursor: pointer;
+        color: ${style['theme-color']};
+      }
     }
     .post_info {
       margin-top: 10px;
       display: flex;
       div {
-        font-size: 10px;
+        font-size: 13px;
         color: ${style['text-color-shallow']};
         margin-right: 10px;
       }
@@ -76,6 +52,27 @@ export const PostItem = styled.div`
         bottom: 0;
         right: 0;
         content: '...';
+      }
+    }
+    .other_info {
+      padding: 10px 0;
+      li {
+        display: inline-block;
+        box-sizing: border-box;
+        width: 70px;
+        height: 25px;
+        border: 1px ${style['border-color']} solid;
+        line-height: 25px;
+        text-align: center;
+        font-size: 0.8rem;
+        color: ${style['text-color-deep']};
+        :nth-child(2) {
+          margin-left: -1px;
+        }
+        i {
+          font-size: 0.8rem;
+          margin-right: 3px;
+        }
       }
     }
   }

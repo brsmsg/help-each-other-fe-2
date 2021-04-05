@@ -40,6 +40,7 @@ const LoginModel: LoginModelType = {
       console.log('res', res);
       if (res.errno === 0) {
         window.localStorage.setItem('userId', res.data.id);
+        localStorage.setItem('currentUser', JSON.stringify(res.data));
         yield put({
           type: 'changeLoginStatus',
           payload: res.data,

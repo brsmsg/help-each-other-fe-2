@@ -1,35 +1,39 @@
+import { getPostRequest } from '@/pages/Home/service';
 import React, { useEffect, useState } from 'react';
 import { NavBarItem, NavBarWrapper } from './style';
+import { tagEnum, tagEnumReverse } from '@/utils/enum';
 
-interface NavBarProps {}
+interface NavBarProps {
+  tags: string[];
+  getPost: Function;
+}
 
 const NavBar: React.FC<NavBarProps> = (props) => {
-  const categories = [
-    '所有帖子',
-    '带拿快递',
-    '超市代购',
-    '拼车出行',
-    '活动积赞',
-  ];
+  const { tags } = props;
+  const { getPost } = props;
 
-  const [category, setCategory] = useState(0);
+  const [tag, setTag] = useState('');
   useEffect(() => {
-    setCategory(0);
+    setTag(tags[0]);
   }, []);
 
-  const changeCategory = (cat: number) => {
-    setCategory(cat);
+  useEffect(() => {
+    getPost(tag);
+  }, [tag]);
+
+  const changeCategory = (tag: string) => {
+    setTag(tag);
   };
 
   return (
     <NavBarWrapper>
       <div className="nav_bar">
-        {categories.map((item, index) => {
+        {tags.map((item, index) => {
           return (
             <NavBarItem
               key={index + '_' + item}
-              className={category === index ? 'active' : ''}
-              onClick={() => changeCategory(index)}
+              className={tag === item ? 'active' : ''}
+              onClick={() => changeCategory(item)}
             >
               <span>{item}</span>
             </NavBarItem>

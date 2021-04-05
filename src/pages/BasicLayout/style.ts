@@ -6,7 +6,7 @@ export const TopBarWrapper = styled.div`
   background-color: #fff;
   width: 100%px;
   .top_bar {
-    width: 1200px;
+    width: 960px;
     height: 100%;
     display: flex;
     justify-content: space-around;

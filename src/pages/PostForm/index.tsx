@@ -1,14 +1,26 @@
 import React, { useRef, useState } from 'react';
 import { PostFormWrapper, FormWrapper } from './style';
-import { Form, Input, Select, Upload, message, Button } from 'antd';
+import {
+  Form,
+  Input,
+  Select,
+  Upload,
+  message,
+  Button,
+  Card,
+  Avatar,
+} from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { postRequest } from './service';
 import { history } from 'umi';
 import { getUserId } from '@/utils/currentUser';
+import UserDetail from '@/components/UserDetail';
 
 interface PostFormProps {}
 
 const { TextArea } = Input;
+const { Meta } = Card;
+const { Option } = Select;
 export const PostForm: React.FC<PostFormProps> = (props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [fileNum, setFileNum] = useState<number>(0);
@@ -32,6 +44,8 @@ export const PostForm: React.FC<PostFormProps> = (props) => {
       message.success('帖子发布成功');
       const { id } = res.data;
       history.push(`post/${id}`);
+    } else {
+      message.error('发布失败，请重试');
     }
   };
 
@@ -50,7 +64,16 @@ export const PostForm: React.FC<PostFormProps> = (props) => {
             <Input size="small" style={{ width: 400, height: 30 }} />
           </Form.Item>
           <Form.Item name="tag" label="标签">
-            <Select size="middle" style={{ width: 400, height: 30 }} />
+            <Select size="middle" style={{ width: 400, height: 30 }}>
+              <Option value="代拿快递">代拿快递</Option>
+              <Option value="超市代购">超市代购</Option>
+              <Option value="拼车出行">拼车出行</Option>
+              <Option value="活动积赞">活动积赞</Option>
+              <Option value="其他">其他</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item name="maxMembers" label="最大参与人数">
+            <Input type="number" style={{ width: 200 }} />
           </Form.Item>
           <Form.Item name="content" label="内容">
             <TextArea style={{ width: 400, height: 300 }} />
@@ -71,6 +94,8 @@ export const PostForm: React.FC<PostFormProps> = (props) => {
           </Form.Item>
         </Form>
       </FormWrapper>
+
+      <UserDetail title="用户信息" />
     </PostFormWrapper>
   );
 };

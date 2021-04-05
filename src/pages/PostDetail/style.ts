@@ -2,12 +2,12 @@ import styled from 'styled-components';
 import style from '@/assets/gloabalStyle';
 
 export const PostWrapper = styled.div`
-  width: 1200px;
+  width: 960px;
   height: 100px;
   margin: 20px auto;
   position: relative;
   .post_detail {
-    width: 900px;
+    width: 700px;
     background-color: #ffffff;
     position: absolute;
     left: 0;
@@ -42,7 +42,7 @@ export const PostWrapper = styled.div`
   }
 
   .author_detail {
-    width: 290px;
+    width: 240px;
     /* height: 300px; */
     background-color: #ffffff;
     position: absolute;

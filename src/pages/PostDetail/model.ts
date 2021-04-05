@@ -10,10 +10,14 @@ export interface PostModelState {
   images: string | null;
   status: number | undefined;
   reward: number | undefined;
-  createdAt: Date | null;
-  updatedAt: Date | null;
+  createdAt: string;
+  updatedAt: string;
   user: LoginModelState | null;
   authorStat: object | null;
+  tag?: string;
+  views: number;
+  accNum: number;
+  maxMembers: number;
 }
 
 export interface PostModelType {
@@ -38,10 +42,13 @@ const PostModel: PostModelType = {
     images: '',
     status: undefined,
     reward: undefined,
-    createdAt: null,
-    updatedAt: null,
+    createdAt: '',
+    updatedAt: '',
     user: null,
     authorStat: null,
+    views: 0,
+    accNum: 0,
+    maxMembers: 0,
   },
   effects: {
     *getPostInfo({ payload }, { call, put }) {

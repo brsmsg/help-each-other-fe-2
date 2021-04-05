@@ -9,7 +9,7 @@ export const NavBarWrapper = styled.div`
   color: ${style["text-color-shallow"]};
   background-color: #ffffff;
   .nav_bar{
-    width: 1200px;
+    width: 960px;
     height: 100%;
     margin: 0 auto;
     display: flex;
