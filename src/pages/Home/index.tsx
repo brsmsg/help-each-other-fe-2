@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { HomeWrapper, PostListWrapper, PostItem } from './style';
+import { HomeWrapper, PostListWrapper, UserListWrapper } from './style';
 import { RouteComponentProps } from 'react-router-dom';
 import NavBar from '@/components/NavBar';
 import PostList from '@/components/PostList';
-import { PostModelState } from '@/.umi/plugin-dva/connect';
 import { tagEnumReverse } from '@/utils/enum';
 import { getPostRequest } from './service';
+import { Card, List, Avatar } from 'antd';
 
 interface HomeProps extends RouteComponentProps {}
 const Home: React.FC<HomeProps> = (props) => {
@@ -37,6 +37,21 @@ const Home: React.FC<HomeProps> = (props) => {
     }
   };
 
+  const data = [
+    {
+      title: 'Ant Design Title 1',
+    },
+    {
+      title: 'Ant Design Title 2',
+    },
+    {
+      title: 'Ant Design Title 3',
+    },
+    {
+      title: 'Ant Design Title 4',
+    },
+  ];
+
   return (
     <>
       <NavBar tags={tags} getPost={getPost}></NavBar>
@@ -46,14 +61,14 @@ const Home: React.FC<HomeProps> = (props) => {
             <span
               className="popular active"
               ref={popularRef}
-              onClick={(e) => handleClickType(e)}
+              onClick={(e: any) => handleClickType(e)}
             >
               热门
             </span>
             <span
               className="newest"
               ref={newestRef}
-              onClick={(e) => handleClickType(e)}
+              onClick={(e: any) => handleClickType(e)}
             >
               最新
             </span>
@@ -61,6 +76,25 @@ const Home: React.FC<HomeProps> = (props) => {
 
           <PostList posts={posts} handlePostClick={handlePostClick}></PostList>
         </PostListWrapper>
+        <UserListWrapper>
+          <Card title="活跃用户">
+            <List
+              itemLayout="horizontal"
+              dataSource={data}
+              renderItem={(item) => (
+                <List.Item>
+                  <List.Item.Meta
+                    avatar={
+                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                    }
+                    title={<a href="https://ant.design">{item.title}</a>}
+                    description="Ant Design"
+                  />
+                </List.Item>
+              )}
+            ></List>
+          </Card>
+        </UserListWrapper>
       </HomeWrapper>
     </>
   );

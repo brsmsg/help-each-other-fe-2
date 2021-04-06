@@ -1,9 +1,9 @@
 import { request } from 'umi';
 
-export const getUserInfo = (params: any) => {
+export const getUserStat = (params: any) => {
+  const { id } = params;
   const requestConfig = {
     method: 'GET',
-    params,
   };
-  return request('user/userStat', requestConfig);
+  return request(`users/userStat/${id}`, requestConfig);
 };

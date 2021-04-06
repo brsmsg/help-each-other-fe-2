@@ -39,7 +39,7 @@ const PostDetail: React.FC<PostDetail> = (props) => {
   }, []);
 
   useEffect(() => {
-    const currentId = getUserId();
+    const currentId = getUserId() as string;
     const { id: postId } = match.params as any;
     const getStatus = async () => {
       const res = await getApplyStatus({ postId, applicantId: currentId });

@@ -9,7 +9,7 @@ export const HomeWrapper = styled.div`
 `;
 
 export const PostListWrapper = styled.div`
-  width: 75%;
+  width: 700px;
   /* height: 1000px; */
   background-color: #ffffff;
   position: absolute;
@@ -35,52 +35,10 @@ export const PostListWrapper = styled.div`
   }
 `;
 
-export const PostItem = styled.div`
-  width: 100%;
-  height: 130px;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px ${style['border-color']} solid;
-  .item_left {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 10px 50px;
-    .title {
-      margin-top: 10px;
-      font-size: 25px;
-    }
-    .post_info {
-      margin-top: 10px;
-      display: flex;
-      div {
-        font-size: 10px;
-        color: ${style['text-color-shallow']};
-        margin-right: 10px;
-      }
-    }
-    .content {
-      width: 70%;
-      height: 30px;
-      margin-top: 10px;
-      line-height: 15px;
-      font-size: 15px;
-      position: relative;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      color: ${style['text-color-deep']};
-      ::after {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        content: '...';
-      }
-    }
-  }
-  .item_right {
-    width: 100px;
-    height: 100px;
-  }
+export const UserListWrapper = styled.div`
+  width: 240px;
+  background-color: #ffffff;
+  position: absolute;
+  right: 0;
+  top: 0;
 `;
