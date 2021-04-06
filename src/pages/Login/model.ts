@@ -37,7 +37,6 @@ const LoginModel: LoginModelType = {
     *login({ payload }, { call, put }) {
       console.log(payload);
       const res = yield call(loginRequest, payload);
-      console.log('res', res);
       if (res.errno === 0) {
         window.localStorage.setItem('userId', res.data.id);
         localStorage.setItem('currentUser', JSON.stringify(res.data));

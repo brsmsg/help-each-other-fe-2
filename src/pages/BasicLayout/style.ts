@@ -15,7 +15,7 @@ export const TopBarWrapper = styled.div`
     .nav_bar {
       /* background-color: red; */
       height: 100%;
-      width: 80%;
+      width: 70%;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -31,6 +31,25 @@ export const TopBarWrapper = styled.div`
     .avatar_wrapper {
       align-self: center;
       margin-right: 10px;
+    }
+    .button_wrapper {
+      width: 200px;
+      align-self: center;
+      /* margin-right: 20px; */
+      button {
+        margin-right: 10px;
+        :hover {
+          transform: scale(1.1);
+        }
+      }
+      .register {
+        color: #fff;
+        background-color: ${style['theme-color']};
+      }
+      .login {
+        color: ${style['theme-color']};
+        border-color: ${style['theme-color']};
+      }
     }
   }
 `;

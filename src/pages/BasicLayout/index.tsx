@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Musk, TopBarWrapper } from './style';
-import { Avatar } from 'antd';
+import { Avatar, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import Login from '../Login';
 import { IconStyle } from '../../assets/iconfont/iconfont';
 import { GlobalStyle } from '@/assets/gloabalStyle';
 import { Link } from '@umijs/runtime';
+import { getUserId } from '@/utils/currentUser';
 
 const BasicLayout: React.FC<RouteComponentProps> = (props) => {
   const { location } = props;
@@ -14,12 +15,24 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
   const [status, setStatus] = useState(true); //true: 登陆  false: 注册
   // chaneg show state of login component
 
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    const id = getUserId();
+    if (id) setIsLogin(true);
+    else setIsLogin(false);
+  }, []);
+
   const toggleShow = (show: boolean) => {
     setIsShow(show);
   };
 
   const toggleStatus = () => {
     setStatus(!status);
+  };
+
+  const toggleIsLogin = () => {
+    setIsLogin(!isLogin);
   };
 
   return (
@@ -49,14 +62,30 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
               </div>
             </Link>
           </div>
-          <div
-            className="avatar_wrapper"
-            onClick={() => {
-              setIsShow(true);
-            }}
-          >
-            <Avatar size={40} icon={<UserOutlined />} />
-          </div>
+          {isLogin ? (
+            <div className="avatar_wrapper">
+              <Avatar size={40} icon={<UserOutlined />} />
+            </div>
+          ) : (
+            <div className="button_wrapper">
+              <Button
+                className="register"
+                onClick={() => {
+                  setIsShow(true);
+                }}
+              >
+                注册
+              </Button>
+              <Button
+                className="login"
+                onClick={() => {
+                  setIsShow(true);
+                }}
+              >
+                登录
+              </Button>
+            </div>
+          )}
         </div>
       </TopBarWrapper>
       <Musk onClick={() => toggleShow(false)} show={isShow} />
@@ -65,6 +94,7 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
         toggleShow={toggleShow}
         status={status}
         toggleStatus={toggleStatus}
+        toggleIsLogin={toggleIsLogin}
       />
       {props.children}
     </>

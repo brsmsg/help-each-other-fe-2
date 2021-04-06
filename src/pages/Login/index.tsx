@@ -11,11 +11,12 @@ interface loginProps {
   status: boolean; //true 登陆 false 注册
   toggleShow: (status: boolean) => void;
   toggleStatus: () => void;
+  toggleIsLogin: () => void;
 }
 
 const Login: React.FC<loginProps> = (props) => {
   const { show, loginModel, status } = props;
-  const { toggleShow, dispatch, toggleStatus } = props;
+  const { toggleShow, dispatch, toggleStatus, toggleIsLogin } = props;
 
   const usernameRef = useRef<HTMLInputElement>(null);
   const pwdRef = useRef<HTMLInputElement>(null);
@@ -30,6 +31,7 @@ const Login: React.FC<loginProps> = (props) => {
       payload,
     });
     toggleShow(false);
+    toggleIsLogin();
   };
 
   return (
