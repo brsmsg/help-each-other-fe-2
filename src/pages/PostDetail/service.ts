@@ -49,3 +49,11 @@ export const getApplyStatus = async (params: {
   };
   return request(`post/apply/status`, requestConfig);
 };
+
+export const getApplyList = async (params: any) => {
+  const { postId } = params;
+  const requestConfig = {
+    method: 'GET',
+  };
+  return request(`post/apply/list/${postId}`, requestConfig);
+};

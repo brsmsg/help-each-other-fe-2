@@ -37,7 +37,7 @@ const UserDetail: React.FC<UserDetailProps> = (props) => {
             avatar={
               <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
             }
-            // title={}
+            title={user?.username}
             description={<span></span>}
           ></Meta>
         </Link>

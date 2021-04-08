@@ -9,8 +9,14 @@ import { PostWrapper, PostDetailWrapper } from './style';
 import { Avatar, Card, List, Input, Button, message } from 'antd';
 import { connect, Loading, useRequest } from 'umi';
 import { PostModelState } from './model';
-import { participantsRequest, applyRequest, getApplyStatus } from './service';
+import {
+  participantsRequest,
+  applyRequest,
+  getApplyStatus,
+  getApplyList,
+} from './service';
 import { getUserId } from '@/utils/currentUser';
+import style from '@/assets/gloabalStyle';
 interface PostDetail extends RouteComponentProps {
   post: PostModelState;
   loading: boolean;
@@ -27,6 +33,8 @@ const PostDetail: React.FC<PostDetail> = (props) => {
   const [text, setText] = useState('');
   const [applyStatus, setApplyStatus] = useState(0);
   const [isAuthor, setIsAuthor] = useState(false);
+  const [applyList, setApplyList] = useState();
+  const [memberList, setMemberList] = useState();
 
   useEffect(() => {
     const { id } = match.params as any;
@@ -38,6 +46,7 @@ const PostDetail: React.FC<PostDetail> = (props) => {
     });
   }, []);
 
+  // 获取申请状态
   useEffect(() => {
     const currentId = getUserId() as string;
     const { id: postId } = match.params as any;
@@ -53,6 +62,28 @@ const PostDetail: React.FC<PostDetail> = (props) => {
     };
     getStatus();
   }, []);
+
+  // 判断作者是不是本人
+  useEffect(() => {
+    const userId = getUserId();
+    const postAuthorId = post.user?.id;
+    if (userId === postAuthorId) setIsAuthor(true);
+  }, [post.user?.id]);
+
+  // 获取申请名单
+  useEffect(() => {
+    const getApplyListAsync = async (postId: string) => {
+      const res = await getApplyList({ postId });
+      if (res.errno === 0) {
+        const list = res.data;
+        setApplyList(list.filter((item: any) => item.is_accept === 0));
+        setMemberList(list.filter((item: any) => item.is_accept === 1));
+      }
+    };
+    if (isAuthor) {
+      getApplyListAsync(post.id);
+    }
+  }, [isAuthor, post.id]);
 
   const data = [
     {
@@ -116,6 +147,35 @@ const PostDetail: React.FC<PostDetail> = (props) => {
     return content;
   };
 
+  const ApplicantList = (
+    <>
+      {applyList == [] ? (
+        <List header="还没有人申请"></List>
+      ) : (
+        <List
+          header="申请用户"
+          itemLayout="horizontal"
+          dataSource={applyList}
+          style={{
+            marginTop: '20px',
+            // borderTop: `1px solid ${style['border-color']}`,
+          }}
+          renderItem={(item: any) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={
+                  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                }
+                title={<a href="https://ant.design">{item.user.username}</a>}
+                description={item.remark}
+              />
+            </List.Item>
+          )}
+        ></List>
+      )}
+    </>
+  );
+
   return (
     <PostWrapper>
       <Card
@@ -142,14 +202,11 @@ const PostDetail: React.FC<PostDetail> = (props) => {
         <div className="post_body">
           <div className="title">{post?.title}</div>
           <div className="content">
-            {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
-            内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
-            内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
-            内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
-            内容内容内容内容内容内容内容内容内容内容内容内容内容内容 */}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{post.content}
           </div>
-          {getUserId() === post.user?.id?.toString() ? null : (
+          {isAuthor ? (
+            ApplicantList
+          ) : (
             <div className="offer_help">{applyComponent()}</div>
           )}
         </div>
