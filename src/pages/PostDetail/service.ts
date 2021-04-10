@@ -70,3 +70,7 @@ export const changeApplySatus = async (params: any) => {
   }
   return data;
 };
+
+export const addViewNum = async (postId: string) => {
+  const res = await request(`post/addViewNum/${postId}`);
+};

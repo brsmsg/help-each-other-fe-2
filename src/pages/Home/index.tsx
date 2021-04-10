@@ -18,7 +18,6 @@ const Home: React.FC<HomeProps> = (props) => {
     // @ts-ignore
     const newPosts = await getPostRequest({ tag: tagEnumReverse[tag] });
     if (newPosts.errno === 0) {
-      console.log(newPosts.data);
       setPosts(newPosts.data);
     }
   };

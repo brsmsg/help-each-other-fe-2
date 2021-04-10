@@ -15,6 +15,7 @@ import {
   getApplyStatus,
   getApplyList,
   changeApplySatus,
+  addViewNum,
 } from './service';
 import { getUserId } from '@/utils/currentUser';
 import style from '@/assets/gloabalStyle';
@@ -46,6 +47,12 @@ const PostDetail: React.FC<PostDetail> = (props) => {
         id,
       },
     });
+  }, []);
+
+  // 浏览量+1
+  useEffect(() => {
+    const { id } = match.params as any;
+    addViewNum(id);
   }, []);
 
   // 获取申请状态

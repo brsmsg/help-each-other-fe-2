@@ -60,9 +60,7 @@ const PostModel: PostModelType = {
         });
         // 获取用户统计
         const { id: userId } = res.data.user;
-        console.log(userId);
         const AuthorRes = yield call(authorStatRequest, { userId });
-        console.log(AuthorRes);
         if (AuthorRes.errno === 0) {
           yield put({
             type: 'changeAuthorStat',
