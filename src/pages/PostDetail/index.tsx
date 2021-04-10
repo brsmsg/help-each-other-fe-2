@@ -5,7 +5,7 @@ import React, {
   useState,
 } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { PostWrapper, PostDetailWrapper } from './style';
+import { PostWrapper, PostDetailWrapper, Interaction } from './style';
 import { Avatar, Card, List, Input, Button, message } from 'antd';
 import { connect, Loading, useRequest } from 'umi';
 import { PostModelState } from './model';
@@ -14,6 +14,7 @@ import {
   applyRequest,
   getApplyStatus,
   getApplyList,
+  changeApplySatus,
 } from './service';
 import { getUserId } from '@/utils/currentUser';
 import style from '@/assets/gloabalStyle';
@@ -35,6 +36,7 @@ const PostDetail: React.FC<PostDetail> = (props) => {
   const [isAuthor, setIsAuthor] = useState(false);
   const [applyList, setApplyList] = useState();
   const [memberList, setMemberList] = useState();
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const { id } = match.params as any;
@@ -83,22 +85,7 @@ const PostDetail: React.FC<PostDetail> = (props) => {
     if (isAuthor) {
       getApplyListAsync(post.id);
     }
-  }, [isAuthor, post.id]);
-
-  const data = [
-    {
-      title: 'Ant Design Title 1',
-    },
-    {
-      title: 'Ant Design Title 2',
-    },
-    {
-      title: 'Ant Design Title 3',
-    },
-    {
-      title: 'Ant Design Title 4',
-    },
-  ];
+  }, [isAuthor, post.id, refresh]);
 
   const handleTextChange = (e: any) => {
     const value = e.target.value;
@@ -117,6 +104,21 @@ const PostDetail: React.FC<PostDetail> = (props) => {
       setApplyStatus(1);
     } else {
       message.error('申请失败，清重试');
+    }
+  };
+
+  const handleInteraction = async (action: string, requestId: string) => {
+    const data = await changeApplySatus({
+      action,
+      requestId,
+    });
+    if (!data) {
+      message.error('出错');
+      return;
+    }
+    if (data[0] === 1) {
+      message.success(`成功${action === 'approve' ? '批准' : '拒绝'}`);
+      setRefresh(!refresh);
     }
   };
 
@@ -169,6 +171,20 @@ const PostDetail: React.FC<PostDetail> = (props) => {
                 title={<a href="https://ant.design">{item.user.username}</a>}
                 description={item.remark}
               />
+              <Interaction>
+                <i
+                  className="iconfont approve"
+                  onClick={() => handleInteraction('approve', item.id)}
+                >
+                  &#xe65b;
+                </i>
+                <i
+                  className="iconfont reject"
+                  onClick={() => handleInteraction('reject', item.id)}
+                >
+                  &#xe606;
+                </i>
+              </Interaction>
             </List.Item>
           )}
         ></List>
@@ -232,15 +248,15 @@ const PostDetail: React.FC<PostDetail> = (props) => {
         <List
           header="参与用户"
           itemLayout="horizontal"
-          dataSource={data}
+          dataSource={memberList}
           style={{ marginTop: '5px' }}
-          renderItem={(item) => (
+          renderItem={(item: any) => (
             <List.Item>
               <List.Item.Meta
                 avatar={
                   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                 }
-                title={<a href="https://ant.design">{item.title}</a>}
+                title={<a href="https://ant.design">{item.user.username}</a>}
                 description="Ant Design"
               />
             </List.Item>

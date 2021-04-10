@@ -57,3 +57,16 @@ export const getApplyList = async (params: any) => {
   };
   return request(`post/apply/list/${postId}`, requestConfig);
 };
+
+export const changeApplySatus = async (params: any) => {
+  const requestConfig = {
+    method: 'POST',
+    data: params,
+  };
+  const res = await request('post/changeStatus', requestConfig);
+  let data = null;
+  if (res.errno === 0) {
+    data = res.data;
+  }
+  return data;
+};

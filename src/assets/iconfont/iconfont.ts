@@ -3,12 +3,12 @@ import { createGlobalStyle } from 'styled-components';
 export const IconStyle = createGlobalStyle`
   @font-face {
   font-family: 'iconfont';  /* project id 2418982 */
-  src: url('//at.alicdn.com/t/font_2418982_2aju0t36it3.eot');
-  src: url('//at.alicdn.com/t/font_2418982_2aju0t36it3.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_2418982_2aju0t36it3.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_2418982_2aju0t36it3.woff') format('woff'),
-  url('//at.alicdn.com/t/font_2418982_2aju0t36it3.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_2418982_2aju0t36it3.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_2418982_ge1hjlai3h.eot');
+  src: url('//at.alicdn.com/t/font_2418982_ge1hjlai3h.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_2418982_ge1hjlai3h.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_2418982_ge1hjlai3h.woff') format('woff'),
+  url('//at.alicdn.com/t/font_2418982_ge1hjlai3h.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_2418982_ge1hjlai3h.svg#iconfont') format('svg');
 }
 }
 
@@ -23,5 +23,4 @@ export const IconStyle = createGlobalStyle`
 .icon-cross:before {
   content: "\e61a";
 }
-
 `;

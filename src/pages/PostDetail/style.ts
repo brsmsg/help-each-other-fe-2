@@ -108,3 +108,22 @@ export const PostDetailWrapper = styled.div`
 //   right: 0;
 //   top: 0;
 // `;
+
+export const Interaction = styled.span`
+  i {
+    display: inline-block;
+    :hover {
+      cursor: pointer;
+      transform: scale(1.2);
+    }
+    &.approve {
+      font-size: 25px;
+      color: green;
+      margin-right: 5px;
+    }
+    &.reject {
+      font-size: 25px;
+      color: red;
+    }
+  }
+`;
