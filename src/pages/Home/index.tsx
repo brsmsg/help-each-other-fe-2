@@ -13,10 +13,11 @@ const Home: React.FC<HomeProps> = (props) => {
   const [posts, setPosts] = useState([]);
   const popularRef = useRef<HTMLElement>(null);
   const newestRef = useRef<HTMLElement>(null);
+  const [type, setType] = useState('');
 
-  const getPost = async (tag: any) => {
+  const getPost = async (tag: any, type: string) => {
     // @ts-ignore
-    const newPosts = await getPostRequest({ tag: tagEnumReverse[tag] });
+    const newPosts = await getPostRequest({ tag: tagEnumReverse[tag], type });
     if (newPosts.errno === 0) {
       setPosts(newPosts.data);
     }
@@ -30,9 +31,11 @@ const Home: React.FC<HomeProps> = (props) => {
     if (e.target === popularRef.current) {
       popularRef.current?.classList.add('active');
       newestRef.current?.classList.remove('active');
+      setType('popular');
     } else {
       newestRef.current?.classList.add('active');
       popularRef.current?.classList.remove('active');
+      setType('newest');
     }
   };
 
@@ -53,7 +56,7 @@ const Home: React.FC<HomeProps> = (props) => {
 
   return (
     <>
-      <NavBar tags={tags} getPost={getPost}></NavBar>
+      <NavBar tags={tags} type={type} getPost={getPost}></NavBar>
       <HomeWrapper>
         <PostListWrapper>
           <div className="post_header">

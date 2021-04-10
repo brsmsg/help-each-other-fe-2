@@ -1,7 +1,8 @@
 import { Effect, ImmerReducer } from 'umi';
-import { authorStatRequest, postDetailRequest } from './service';
+import { postDetailRequest } from './service';
 import { LoginModelState } from 'umi';
 import LoginModel from '../Login/model';
+import { getUserStat } from '@/components/UserDetail/service';
 
 export interface PostModelState {
   id: string;
@@ -59,8 +60,9 @@ const PostModel: PostModelType = {
           payload: res.data,
         });
         // 获取用户统计
-        const { id: userId } = res.data.user;
-        const AuthorRes = yield call(authorStatRequest, { userId });
+        const { id } = res.data.user;
+        const AuthorRes = yield call(getUserStat, { id });
+        console.log('stat', AuthorRes);
         if (AuthorRes.errno === 0) {
           yield put({
             type: 'changeAuthorStat',

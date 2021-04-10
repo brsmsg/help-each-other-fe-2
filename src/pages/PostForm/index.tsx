@@ -59,40 +59,56 @@ export const PostForm: React.FC<PostFormProps> = (props) => {
   return (
     <PostFormWrapper>
       <FormWrapper>
-        <Form size="middle" onFinish={onFinish}>
-          <Form.Item name="title" label="标题">
-            <Input size="small" style={{ width: 400, height: 30 }} />
-          </Form.Item>
-          <Form.Item name="tag" label="标签">
-            <Select size="middle" style={{ width: 400, height: 30 }}>
-              <Option value="代拿快递">代拿快递</Option>
-              <Option value="超市代购">超市代购</Option>
-              <Option value="拼车出行">拼车出行</Option>
-              <Option value="活动积赞">活动积赞</Option>
-              <Option value="其他">其他</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item name="maxMembers" label="最大参与人数">
-            <Input type="number" style={{ width: 200 }} />
-          </Form.Item>
-          <Form.Item name="content" label="内容">
-            <TextArea style={{ width: 400, height: 300 }} />
-          </Form.Item>
-          <Form.Item name="image" label="图片">
-            <Upload
-              action="http://localhost:3001/post/uploadImg"
-              listType="picture-card"
-              // fileList={fileList}
-              // onPreview={this.handlePreview}
-              onChange={handleChange}
-            >
-              {fileNum >= 3 ? null : uploadButton}
-            </Upload>
-          </Form.Item>
-          <Form.Item>
-            <Button htmlType="submit">提交</Button>
-          </Form.Item>
-        </Form>
+        <Card title="发布信息">
+          <Form size="middle" onFinish={onFinish} title="发布信息">
+            <Form.Item name="title" label="标题">
+              <Input size="small" style={{ height: 30 }} />
+            </Form.Item>
+            <Form.Item name="tag" label="标签">
+              <Select size="middle" style={{ height: 30 }}>
+                <Option value="代拿快递">代拿快递</Option>
+                <Option value="超市代购">超市代购</Option>
+                <Option value="拼车出行">拼车出行</Option>
+                <Option value="活动积赞">活动积赞</Option>
+                <Option value="其他">其他</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item name="maxMembers" label="最大参与人数">
+              <Input
+                type="number"
+                // style={{ width:  }}
+                min={0}
+                defaultValue={0}
+              />
+            </Form.Item>
+            <Form.Item name="reward" label="报酬">
+              <Input
+                placeholder="不填写默认为自行商议"
+                prefix="￥"
+                suffix="RMB"
+              ></Input>
+            </Form.Item>
+            <Form.Item name="content" label="内容">
+              <TextArea style={{ width: 400, height: 300 }} />
+            </Form.Item>
+            <Form.Item name="image" label="图片">
+              <Upload
+                action="http://localhost:3001/post/uploadImg"
+                listType="picture-card"
+                // fileList={fileList}
+                // onPreview={this.handlePreview}
+                onChange={handleChange}
+              >
+                {fileNum >= 3 ? null : uploadButton}
+              </Upload>
+            </Form.Item>
+            <Form.Item style={{ textAlign: 'center' }}>
+              <Button htmlType="submit" style={{ width: 300 }}>
+                提交
+              </Button>
+            </Form.Item>
+          </Form>
+        </Card>
       </FormWrapper>
 
       <UserDetail title="用户信息" />

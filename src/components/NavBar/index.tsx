@@ -6,10 +6,11 @@ import { tagEnum, tagEnumReverse } from '@/utils/enum';
 interface NavBarProps {
   tags: string[];
   getPost: Function;
+  type: string;
 }
 
 const NavBar: React.FC<NavBarProps> = (props) => {
-  const { tags } = props;
+  const { tags, type } = props;
   const { getPost } = props;
 
   const [tag, setTag] = useState('');
@@ -18,8 +19,8 @@ const NavBar: React.FC<NavBarProps> = (props) => {
   }, []);
 
   useEffect(() => {
-    getPost(tag);
-  }, [tag]);
+    getPost(tag, type);
+  }, [tag, type]);
 
   const changeCategory = (tag: string) => {
     setTag(tag);

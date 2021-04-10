@@ -8,12 +8,19 @@ export const postDetailRequest = async (params: { id: string }) => {
   return request(`post/${params.id}`, requestConfig);
 };
 
-export const authorStatRequest = async (params: { id: string }) => {
+// export const authorStatRequest = async (params: { id: string }) => {
+//   const requestConfig = {
+//     method: 'GET',
+//     params,
+//   };
+//   return request(`users/userStat/${params.id}`, requestConfig);
+// };
+export const getUserStat = (params: any) => {
+  const { id } = params;
   const requestConfig = {
     method: 'GET',
-    params,
   };
-  return request(`users/userStat/${params.id}`, requestConfig);
+  return request(`users/userStat/${id}`, requestConfig);
 };
 
 export const participantsRequest = async (params: { id: string }) => {

@@ -19,6 +19,7 @@ import {
 } from './service';
 import { getUserId } from '@/utils/currentUser';
 import style from '@/assets/gloabalStyle';
+import { getUserStat } from '@/components/UserDetail/service';
 interface PostDetail extends RouteComponentProps {
   post: PostModelState;
   loading: boolean;
@@ -38,6 +39,7 @@ const PostDetail: React.FC<PostDetail> = (props) => {
   const [applyList, setApplyList] = useState();
   const [memberList, setMemberList] = useState();
   const [refresh, setRefresh] = useState(false);
+  const [userStat, setUserStat] = useState();
 
   useEffect(() => {
     const { id } = match.params as any;
@@ -61,10 +63,12 @@ const PostDetail: React.FC<PostDetail> = (props) => {
     const { id: postId } = match.params as any;
     const getStatus = async () => {
       const res = await getApplyStatus({ postId, applicantId: currentId });
+      console.log(res);
       if (res.errno === 0) {
         const { is_accept } = res.data;
-        if (is_accept) setApplyStatus(2);
-        else setApplyStatus(1);
+        console.log(is_accept);
+        if (is_accept === 1) setApplyStatus(2);
+        else if (is_accept === 0) setApplyStatus(1);
       } else {
         setApplyStatus(0);
       }
@@ -94,6 +98,7 @@ const PostDetail: React.FC<PostDetail> = (props) => {
     }
   }, [isAuthor, post.id, refresh]);
 
+
   const handleTextChange = (e: any) => {
     const value = e.target.value;
     setText(value);
@@ -101,8 +106,7 @@ const PostDetail: React.FC<PostDetail> = (props) => {
 
   const handleOfferHelp = async () => {
     const res = await applyRequest({
-      // applicantId: getUserId(),
-      applicantId: '1',
+      applicantId: getUserId() as string,
       postId: post.id,
       text,
     });
@@ -243,14 +247,12 @@ const PostDetail: React.FC<PostDetail> = (props) => {
           title={post.user?.username}
           description={<span></span>}
         ></Meta>
+        <div className="stat">所属区域：{(post.user as any)?.location}</div>
         <div className="stat">
-          所属区域：{(post.authorStat as any)?.location}
+          发布请求数：{(post.authorStat as any)?.postNum}
         </div>
         <div className="stat">
-          发布请求数：{(post.authorStat as any)?.postCount}
-        </div>
-        <div className="stat">
-          帮助他人次数：{(post.authorStat as any)?.helpCount}
+          帮助他人次数：{(post.authorStat as any)?.helpNum}
         </div>
         <List
           header="参与用户"
