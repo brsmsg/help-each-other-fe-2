@@ -64,7 +64,9 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
           </div>
           {isLogin ? (
             <div className="avatar_wrapper">
-              <Avatar size={40} icon={<UserOutlined />} />
+              <Link to={`/userInfo/${getUserId()}`}>
+                <Avatar size={40} icon={<UserOutlined />} />
+              </Link>
             </div>
           ) : (
             <div className="button_wrapper">
