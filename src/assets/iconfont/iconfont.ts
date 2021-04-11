@@ -22,5 +22,4 @@ export const IconStyle = createGlobalStyle`
 
 .icon-cross:before {
   content: "\e61a";
-}
-`;
+}`

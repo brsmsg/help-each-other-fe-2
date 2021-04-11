@@ -99,16 +99,6 @@ export const PostDetailWrapper = styled.div`
   }
 `;
 
-// export const AuthorDetailWrapper = styled.div`
-//   box-sizing: border-box;
-//   width: 290px;
-//   height: 300px;
-//   background-color: #ffffff;
-//   position: absolute;
-//   right: 0;
-//   top: 0;
-// `;
-
 export const Interaction = styled.span`
   i {
     display: inline-block;
@@ -125,5 +115,15 @@ export const Interaction = styled.span`
       font-size: 25px;
       color: red;
     }
+  }
+`;
+
+export const ImageWrapper = styled.div`
+  margin-top: 10px;
+  padding: 10px;
+  border-top: ${style['border-color']} 1px solid;
+  text-align: center;
+  span {
+    font-size: 20px;
   }
 `;

@@ -5,8 +5,13 @@ import React, {
   useState,
 } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { PostWrapper, PostDetailWrapper, Interaction } from './style';
-import { Avatar, Card, List, Input, Button, message } from 'antd';
+import {
+  PostWrapper,
+  PostDetailWrapper,
+  Interaction,
+  ImageWrapper,
+} from './style';
+import { Avatar, Card, List, Input, Button, message, Image } from 'antd';
 import { connect, Link, Loading, useRequest } from 'umi';
 import { PostModelState } from './model';
 import {
@@ -20,6 +25,7 @@ import {
 import { getUserId } from '@/utils/currentUser';
 import style from '@/assets/gloabalStyle';
 import { getUserStat } from '@/components/UserDetail/service';
+import { PREFIX } from '@/utils/constants';
 interface PostDetail extends RouteComponentProps {
   post: PostModelState;
   loading: boolean;
@@ -40,6 +46,7 @@ const PostDetail: React.FC<PostDetail> = (props) => {
   const [memberList, setMemberList] = useState();
   const [refresh, setRefresh] = useState(false);
   const [userStat, setUserStat] = useState();
+  const images = useRef<any[]>([]);
 
   useEffect(() => {
     const { id } = match.params as any;
@@ -50,6 +57,13 @@ const PostDetail: React.FC<PostDetail> = (props) => {
       },
     });
   }, []);
+
+  useEffect(() => {
+    images.current = post.images
+      ?.split('&')
+      .map((item) => `${PREFIX}${item}`) as any[];
+    console.log(images);
+  }, [post]);
 
   // 浏览量+1
   useEffect(() => {
@@ -213,9 +227,7 @@ const PostDetail: React.FC<PostDetail> = (props) => {
         title={
           <Meta
             style={{ display: 'flex', alignItems: 'center' }}
-            avatar={
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-            }
+            avatar={<Avatar src={`${PREFIX}${post.user?.avatar}`} />}
             title={post.user?.username}
             description={
               <>
@@ -232,6 +244,18 @@ const PostDetail: React.FC<PostDetail> = (props) => {
           <div className="title">{post?.title}</div>
           <div className="content">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{post.content}
+            {images.current ? (
+              <ImageWrapper>
+                <span>图片</span>
+                {images.current.map((item) => {
+                  return (
+                    <div style={{ margin: 20 }}>
+                      <Image src={item} width={'100%'} />
+                    </div>
+                  );
+                })}
+              </ImageWrapper>
+            ) : null}
           </div>
           {isAuthor ? (
             ApplicantList
@@ -244,9 +268,7 @@ const PostDetail: React.FC<PostDetail> = (props) => {
       <Card className="author_detail" title="发布者信息" bordered={true}>
         <Link to={`/userInfo/${post.user?.id}`}>
           <Meta
-            avatar={
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-            }
+            avatar={<Avatar src={`${PREFIX}${post.user?.avatar}`} />}
             title={post.user?.username}
             description={<span></span>}
           ></Meta>
@@ -266,9 +288,7 @@ const PostDetail: React.FC<PostDetail> = (props) => {
           renderItem={(item: any) => (
             <List.Item>
               <List.Item.Meta
-                avatar={
-                  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                }
+                avatar={<Avatar src={`${PREFIX}${item.user.avatar}`} />}
                 title={<a href="https://ant.design">{item.user.username}</a>}
                 description="Ant Design"
               />

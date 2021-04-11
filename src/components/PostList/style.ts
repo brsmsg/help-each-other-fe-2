@@ -12,6 +12,7 @@ export const PostItem = styled.div`
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-bottom: 1px ${style['border-color']} solid;
   .item_left {
     flex: 1;
@@ -79,5 +80,6 @@ export const PostItem = styled.div`
   .item_right {
     width: 100px;
     height: 100px;
+    margin-right: 40px;
   }
 `;

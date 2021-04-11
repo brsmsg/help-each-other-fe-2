@@ -8,7 +8,6 @@ import { IconStyle } from '../../assets/iconfont/iconfont';
 import { GlobalStyle } from '@/assets/gloabalStyle';
 import { Link } from '@umijs/runtime';
 import { getUser, getUserId, clearStorage } from '@/utils/currentUser';
-import { render } from 'react-dom';
 
 const BasicLayout: React.FC<RouteComponentProps> = (props) => {
   const { location } = props;
