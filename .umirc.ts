@@ -36,8 +36,12 @@ export default defineConfig({
         },
         {
           path: '/userInfo/:id',
-          component: 'UserInfo'
-        }
+          component: 'UserInfo',
+        },
+        {
+          path: 'settings',
+          component: 'Settings',
+        },
       ],
     },
   ],

@@ -7,7 +7,7 @@ import React, {
 import { RouteComponentProps } from 'react-router';
 import { PostWrapper, PostDetailWrapper, Interaction } from './style';
 import { Avatar, Card, List, Input, Button, message } from 'antd';
-import { connect, Loading, useRequest } from 'umi';
+import { connect, Link, Loading, useRequest } from 'umi';
 import { PostModelState } from './model';
 import {
   participantsRequest,
@@ -98,7 +98,6 @@ const PostDetail: React.FC<PostDetail> = (props) => {
     }
   }, [isAuthor, post.id, refresh]);
 
-
   const handleTextChange = (e: any) => {
     const value = e.target.value;
     setText(value);
@@ -156,6 +155,9 @@ const PostDetail: React.FC<PostDetail> = (props) => {
         break;
       case 2:
         content = <h1>审核通过，已经加入</h1>;
+        break;
+      case 3:
+        content = <h1>请求被拒绝</h1>;
     }
     return content;
   };
@@ -240,13 +242,15 @@ const PostDetail: React.FC<PostDetail> = (props) => {
       </Card>
       {/* <AuthorDetailWrapper></AuthorDetailWrapper> */}
       <Card className="author_detail" title="发布者信息" bordered={true}>
-        <Meta
-          avatar={
-            <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-          }
-          title={post.user?.username}
-          description={<span></span>}
-        ></Meta>
+        <Link to={`/userInfo/${post.user?.id}`}>
+          <Meta
+            avatar={
+              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+            }
+            title={post.user?.username}
+            description={<span></span>}
+          ></Meta>
+        </Link>
         <div className="stat">所属区域：{(post.user as any)?.location}</div>
         <div className="stat">
           发布请求数：{(post.authorStat as any)?.postNum}

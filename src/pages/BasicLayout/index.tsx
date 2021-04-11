@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Musk, TopBarWrapper } from './style';
-import { Avatar, Button } from 'antd';
+import { Avatar, Button, Dropdown, Menu } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import Login from '../Login';
 import { IconStyle } from '../../assets/iconfont/iconfont';
@@ -35,6 +35,18 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
     setIsLogin(!isLogin);
   };
 
+  const dropDownMenu = (
+    <Menu>
+      <Menu.Item>
+        <Link to={`/userInfo/${getUserId()}`}>前往个人主页</Link>
+      </Menu.Item>
+      <Menu.Item>
+        <Link to="/settings">修改个人信息</Link>
+      </Menu.Item>
+      <Menu.Item>登出</Menu.Item>
+    </Menu>
+  );
+
   return (
     <>
       <GlobalStyle></GlobalStyle>
@@ -64,9 +76,9 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
           </div>
           {isLogin ? (
             <div className="avatar_wrapper">
-              <Link to={`/userInfo/${getUserId()}`}>
+              <Dropdown overlay={dropDownMenu} placement="bottomLeft" arrow>
                 <Avatar size={40} icon={<UserOutlined />} />
-              </Link>
+              </Dropdown>
             </div>
           ) : (
             <div className="button_wrapper">
