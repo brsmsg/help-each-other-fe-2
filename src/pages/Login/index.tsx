@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { LoginWrapper } from './style';
 import { loginRequest } from './service';
 import { connect, LoginModelState, Loading } from 'umi';
+import { getUser, getUserId } from '@/utils/currentUser';
 
 interface loginProps {
   loginModel?: LoginModelState;
@@ -30,9 +31,12 @@ const Login: React.FC<loginProps> = (props) => {
       type: 'login/login',
       payload,
     });
+  };
+
+  useEffect(() => {
     toggleShow(false);
     toggleIsLogin();
-  };
+  }, [getUserId()]);
 
   return (
     <LoginWrapper login={show}>

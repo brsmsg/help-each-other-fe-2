@@ -14,3 +14,7 @@ export const updateLocalStorage = (key: string, newValue: string) => {
   user[key] = newValue;
   localStorage.setItem('currentUser', JSON.stringify(user));
 };
+
+export const clearStorage = () => {
+  localStorage.removeItem('currentUser');
+};

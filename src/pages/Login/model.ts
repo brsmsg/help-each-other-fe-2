@@ -1,5 +1,6 @@
 import { Effect, ImmerReducer } from 'umi';
 import { loginRequest } from './service';
+import { message } from 'antd';
 
 export interface LoginModelState {
   id: number | undefined;
@@ -44,6 +45,9 @@ const LoginModel: LoginModelType = {
           type: 'changeLoginStatus',
           payload: res.data,
         });
+        message.success('登陆成功');
+      } else {
+        message.error(res.message);
       }
     },
   },

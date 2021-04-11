@@ -24,7 +24,7 @@ const FormItem: React.FC<FormItemProps> = (props) => {
 
   useEffect(() => {
     setValue(defaultValue as string);
-    if (type === 'image') setUrl(defaultValue);
+    if (type === 'image') setUrl(defaultValue as string);
   }, []);
 
   const onchange = (e: any) => {

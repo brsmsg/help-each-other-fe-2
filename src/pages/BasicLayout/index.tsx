@@ -7,7 +7,8 @@ import Login from '../Login';
 import { IconStyle } from '../../assets/iconfont/iconfont';
 import { GlobalStyle } from '@/assets/gloabalStyle';
 import { Link } from '@umijs/runtime';
-import { getUserId } from '@/utils/currentUser';
+import { getUser, getUserId, clearStorage } from '@/utils/currentUser';
+import { render } from 'react-dom';
 
 const BasicLayout: React.FC<RouteComponentProps> = (props) => {
   const { location } = props;
@@ -35,6 +36,12 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
     setIsLogin(!isLogin);
   };
 
+  const logOut = () => {
+    clearStorage();
+    setIsLogin(!isLogin);
+    window.history.go(0);
+  };
+
   const dropDownMenu = (
     <Menu>
       <Menu.Item>
@@ -43,7 +50,7 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
       <Menu.Item>
         <Link to="/settings">修改个人信息</Link>
       </Menu.Item>
-      <Menu.Item>登出</Menu.Item>
+      <Menu.Item onClick={logOut}>登出</Menu.Item>
     </Menu>
   );
 
@@ -77,7 +84,11 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
           {isLogin ? (
             <div className="avatar_wrapper">
               <Dropdown overlay={dropDownMenu} placement="bottomLeft" arrow>
-                <Avatar size={40} icon={<UserOutlined />} />
+                <Avatar
+                  size={40}
+                  icon={<UserOutlined />}
+                  src={`http://localhost:3001${getUser()?.avatar}`}
+                />
               </Dropdown>
             </div>
           ) : (
