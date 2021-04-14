@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Musk, TopBarWrapper } from './style';
-import { Avatar, Button, Dropdown, Menu } from 'antd';
+import { Avatar, Button, Dropdown, Menu, Badge } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import Login from '../Login';
 import { IconStyle } from '../../assets/iconfont/iconfont';
-import { GlobalStyle } from '@/assets/gloabalStyle';
+import style, { GlobalStyle } from '@/assets/gloabalStyle';
 import { Link } from '@umijs/runtime';
 import { getUser, getUserId, clearStorage } from '@/utils/currentUser';
 
@@ -44,10 +44,10 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
   const dropDownMenu = (
     <Menu>
       <Menu.Item>
-        <Link to={`/userInfo/${getUserId()}`}>前往个人主页</Link>
+        <Link to={`/userInfo/${getUserId()}`}>我的帖子</Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to="/settings">修改个人信息</Link>
+        <Link to="/settings">修改信息</Link>
       </Menu.Item>
       <Menu.Item onClick={logOut}>登出</Menu.Item>
     </Menu>
@@ -79,17 +79,38 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
                 发帖
               </div>
             </Link>
+            <div>反馈</div>
           </div>
           {isLogin ? (
-            <div className="avatar_wrapper">
-              <Dropdown overlay={dropDownMenu} placement="bottomLeft" arrow>
-                <Avatar
-                  size={40}
-                  icon={<UserOutlined />}
-                  src={`http://localhost:3001${getUser()?.avatar}`}
-                />
+            <>
+              <div style={{ alignSelf: 'center', marginRight: 50 }}>
+                <Link to={`/message/${getUserId()}`}>
+                  <Badge count={1} size="small">
+                    <Button
+                      className="message"
+                      style={{
+                        color: '#fff',
+                        backgroundColor: style['theme-color'],
+                      }}
+                    >
+                      消息中心
+                    </Button>
+                  </Badge>
+                </Link>
+              </div>
+
+              <Dropdown overlay={dropDownMenu} placement="bottomCenter" arrow>
+                <div className="avatar_wrapper">
+                  <Avatar
+                    size={40}
+                    icon={<UserOutlined />}
+                    src={`http://localhost:3001${getUser()?.avatar}`}
+                  />
+
+                  <span>{getUser().username}</span>
+                </div>
               </Dropdown>
-            </div>
+            </>
           ) : (
             <div className="button_wrapper">
               <Button

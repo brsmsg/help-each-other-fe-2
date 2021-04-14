@@ -29,8 +29,17 @@ export const TopBarWrapper = styled.div`
       }
     }
     .avatar_wrapper {
+      height: 50px;
+      max-width: 150px;
       align-self: center;
-      margin-right: 10px;
+      margin: 0 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      span {
+        font-size: 25px;
+        margin-left: 10px;
+      }
     }
     .button_wrapper {
       width: 200px;

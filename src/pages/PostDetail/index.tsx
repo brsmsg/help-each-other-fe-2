@@ -11,7 +11,16 @@ import {
   Interaction,
   ImageWrapper,
 } from './style';
-import { Avatar, Card, List, Input, Button, message, Image } from 'antd';
+import {
+  Avatar,
+  Card,
+  List,
+  Input,
+  Button,
+  message,
+  Image,
+  Result,
+} from 'antd';
 import { connect, Link, Loading, useRequest } from 'umi';
 import { PostModelState } from './model';
 import {
@@ -26,6 +35,7 @@ import { getUserId } from '@/utils/currentUser';
 import style from '@/assets/gloabalStyle';
 import { getUserStat } from '@/components/UserDetail/service';
 import { PREFIX } from '@/utils/constants';
+import { SmileOutlined } from '@ant-design/icons';
 interface PostDetail extends RouteComponentProps {
   post: PostModelState;
   loading: boolean;
@@ -43,7 +53,7 @@ const PostDetail: React.FC<PostDetail> = (props) => {
   const [applyStatus, setApplyStatus] = useState(0);
   const [isAuthor, setIsAuthor] = useState(false);
   const [applyList, setApplyList] = useState();
-  const [memberList, setMemberList] = useState();
+  const [memberList, setMemberList] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [userStat, setUserStat] = useState();
   const images = useRef<any[]>([]);
@@ -180,7 +190,7 @@ const PostDetail: React.FC<PostDetail> = (props) => {
     <>
       {applyList == [] ? (
         <List header="还没有人申请"></List>
-      ) : (
+      ) : memberList.length < post.maxMembers ? (
         <List
           header="申请用户"
           itemLayout="horizontal"
@@ -215,6 +225,12 @@ const PostDetail: React.FC<PostDetail> = (props) => {
             </List.Item>
           )}
         ></List>
+      ) : (
+        <Result
+          style={{ marginTop: 20 }}
+          icon={<SmileOutlined style={{ color: style['theme-color'] }} />}
+          title="已经满员"
+        />
       )}
     </>
   );
