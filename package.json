@@ -25,6 +25,9 @@
     "@types/styled-components": "^5.1.7",
     "@umijs/preset-react": "1.x",
     "cz-conventional-changelog": "^3.3.0",
+    "react-jwchat": "^1.0.2",
+    "socket.io": "^4.0.1",
+    "socket.io-client": "^4.0.1",
     "styled-components": "^5.2.1",
     "umi": "^3.3.9"
   },

@@ -42,6 +42,10 @@ export default defineConfig({
           path: 'settings',
           component: 'Settings',
         },
+        {
+          path: 'message/:id',
+          component: 'Message',
+        },
       ],
     },
   ],

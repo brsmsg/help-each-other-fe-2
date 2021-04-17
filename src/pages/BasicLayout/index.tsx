@@ -8,6 +8,7 @@ import { IconStyle } from '../../assets/iconfont/iconfont';
 import style, { GlobalStyle } from '@/assets/gloabalStyle';
 import { Link } from '@umijs/runtime';
 import { getUser, getUserId, clearStorage } from '@/utils/currentUser';
+import webSocket, { Socket } from 'socket.io-client';
 
 const BasicLayout: React.FC<RouteComponentProps> = (props) => {
   const { location } = props;
@@ -17,11 +18,38 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
 
   const [isLogin, setIsLogin] = useState(false);
 
+  const [ws, setWs] = useState<Socket>();
+
+  const connectWebSocket = () => {
+    //開啟
+    setWs(webSocket('http://localhost:3001'));
+  };
+
   useEffect(() => {
     const id = getUserId();
     if (id) setIsLogin(true);
     else setIsLogin(false);
+
+    connectWebSocket();
   }, []);
+
+  useEffect(() => {
+    if (ws) {
+      console.log('success connect');
+      initWebSocket();
+    }
+  }, [ws]);
+
+  const initWebSocket = () => {
+    //對 getMessage 設定監聽，如果 server 有透過 getMessage 傳送訊息，將會在此被捕捉
+    ws?.on('getMessage', (message) => {
+      console.log(message);
+    });
+  };
+
+  const sendMessage = () => {
+    ws?.emit('getMessage', '只回傳給發送訊息的 client');
+  };
 
   const toggleShow = (show: boolean) => {
     setIsShow(show);
