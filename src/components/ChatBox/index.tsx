@@ -1,9 +1,10 @@
 import { PREFIX } from '@/utils/constants';
 import { getUser, getUserId } from '@/utils/currentUser';
 import style from '@/assets/gloabalStyle';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { getMsgHistory } from './service';
 import { ChatBoxWrapprer } from './style';
+import { WSContext } from '@/pages/BasicLayout';
 const { Chat } = require('react-jwchat');
 
 interface ChatBoxProps {
@@ -14,6 +15,25 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
   const { chatUser } = props;
   const [contact, setContact] = useState({});
   const [history, setHistory] = useState([]);
+
+  const ws = useContext(WSContext);
+
+  ws.on('message', (data: any) => {
+    console.log('chat Message', data);
+    const newHistory = [
+      ...history,
+      {
+        id: data.id,
+        user: getUser(),
+        createdAt: new Date(),
+        receiver_id: data.receiver.id,
+        sender_id: data.user.id,
+        content: data.message.content,
+      },
+    ] as any;
+    console.log(newHistory);
+    setHistory(newHistory);
+  });
 
   useEffect(() => {
     const newContact = {
@@ -31,6 +51,24 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
     };
     getHistory();
   }, [chatUser]);
+
+  const onSend = (message: any) => {
+    console.log(message);
+    message.receiver = chatUser;
+    ws.emit('message', message);
+    const newHistory = [
+      ...history,
+      {
+        id: message.id,
+        user: getUser(),
+        createdAt: new Date(),
+        receiver_id: message.receiver.id,
+        sender_id: message.user.id,
+        content: message.message.content,
+      },
+    ] as any;
+    setHistory(newHistory);
+  };
 
   // content: 'hhh';
   // createdAt: '2021-03-05T07:09:06.000Z';
@@ -61,11 +99,12 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
         contact={contact}
         me={getUser()}
         chatList={(history as any).map((item: any) => formatData(item))}
-        style={{
-          width: '90%',
-          height: '90%',
-          // backgroundColor: `${style['theme-color']}`,
-        }}
+        onSend={onSend}
+        // style={{
+        // width: '90%',
+        // height: '90%',
+        // backgroundColor: `${style['theme-color']}`,
+        // }}
       ></Chat>
     </ChatBoxWrapprer>
   );

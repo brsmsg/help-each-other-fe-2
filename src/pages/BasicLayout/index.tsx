@@ -10,6 +10,8 @@ import { Link } from '@umijs/runtime';
 import { getUser, getUserId, clearStorage } from '@/utils/currentUser';
 import webSocket, { Socket } from 'socket.io-client';
 
+export const WSContext = React.createContext(undefined as any);
+
 const BasicLayout: React.FC<RouteComponentProps> = (props) => {
   const { location } = props;
   const [isShow, setIsShow] = useState(false);
@@ -41,9 +43,9 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
   }, [ws]);
 
   const initWebSocket = () => {
-    //對 getMessage 設定監聽，如果 server 有透過 getMessage 傳送訊息，將會在此被捕捉
-    ws?.on('getMessage', (message) => {
-      console.log(message);
+    ws?.emit('login', getUserId());
+    ws?.on('message', (data: any) => {
+      console.log(data);
     });
   };
 
@@ -82,7 +84,7 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
   );
 
   return (
-    <>
+    <WSContext.Provider value={ws}>
       <GlobalStyle></GlobalStyle>
       <IconStyle></IconStyle>
       <TopBarWrapper>
@@ -170,7 +172,7 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
         toggleIsLogin={toggleIsLogin}
       />
       {props.children}
-    </>
+    </WSContext.Provider>
   );
 };
 
