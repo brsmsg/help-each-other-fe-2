@@ -6,12 +6,15 @@ import { getAllAdminMessages, getAllContacts } from './service';
 import { getUserId } from '@/utils/currentUser';
 import style from '@/assets/gloabalStyle';
 import { Link } from '@umijs/runtime';
+import ChatBox from '@/components/ChatBox';
 
 interface MessageProps {}
 
 const Message: React.FC<MessageProps> = (props) => {
   const [contacts, setContacts] = useState([]);
   const [adminMessages, setAdminMessages] = useState([]);
+  const [isChat, setIsChat] = useState(false);
+  const [chatUser, setChatUser] = useState();
 
   useEffect(() => {
     const getContact = async () => {
@@ -38,18 +41,20 @@ const Message: React.FC<MessageProps> = (props) => {
             dataSource={contacts}
             style={{ marginTop: '5px', minHeight: '500px' }}
             renderItem={(item: any) => (
-              <List.Item>
+              <List.Item
+                onClick={() => {
+                  setIsChat(true);
+                  setChatUser(item.user);
+                }}
+              >
                 <List.Item.Meta
                   avatar={
                     <Avatar src={`${PREFIX}${item.user?.avatar}`} size={40} />
                   }
                   title={
-                    <Link
-                      to={`/userInfo/${item.user.id}`}
-                      style={{ color: `${style['theme-color']}` }}
-                    >
+                    <div style={{ color: `${style['theme-color']}` }}>
                       {item.user?.username}
-                    </Link>
+                    </div>
                   }
                   description={
                     <span style={{ color: `${style['text-color-deep']}` }}>
@@ -62,24 +67,29 @@ const Message: React.FC<MessageProps> = (props) => {
           ></List>
         </Card>
       </ContactWrapper>
-      <MessageListWrapper>
-        <div className="title">消息记录</div>
-        <List
-          dataSource={adminMessages}
-          renderItem={(item: any) => (
-            <List.Item style={{ minHeight: '100px', padding: '5px 20px' }}>
-              <List.Item.Meta
-                title={
-                  <Link to="" style={{ color: `${style['theme-color']}` }}>
-                    系统管理员消息
-                  </Link>
-                }
-                description={<span>{item.content}</span>}
-              />
-            </List.Item>
-          )}
-        ></List>
-      </MessageListWrapper>
+      {isChat ? (
+        <ChatBox chatUser={chatUser}></ChatBox>
+      ) : (
+        <MessageListWrapper>
+          <div className="title">消息记录</div>
+          <List
+            style={{ borderBottom: `1px solid ${style['border-color']}` }}
+            dataSource={adminMessages}
+            renderItem={(item: any) => (
+              <List.Item style={{ minHeight: '100px', padding: '5px 20px' }}>
+                <List.Item.Meta
+                  title={
+                    <Link to="" style={{ color: `${style['theme-color']}` }}>
+                      系统管理员消息
+                    </Link>
+                  }
+                  description={<span>{item.content}</span>}
+                />
+              </List.Item>
+            )}
+          ></List>
+        </MessageListWrapper>
+      )}
     </MessageWrapper>
   );
 };
