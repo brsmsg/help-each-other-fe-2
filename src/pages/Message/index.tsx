@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { ContactWrapper, MessageListWrapper, MessageWrapper } from './style';
 import { Card, List, Avatar } from 'antd';
 import { PREFIX } from '@/utils/constants';
@@ -7,6 +7,7 @@ import { getUserId } from '@/utils/currentUser';
 import style from '@/assets/gloabalStyle';
 import { Link } from '@umijs/runtime';
 import ChatBox from '@/components/ChatBox';
+import { MSGContext } from '@/pages/BasicLayout';
 
 interface MessageProps {}
 
@@ -16,12 +17,16 @@ const Message: React.FC<MessageProps> = (props) => {
   const [isChat, setIsChat] = useState(false);
   const [chatUser, setChatUser] = useState();
 
+  const { msg, changeMsgNum } = useContext(MSGContext);
+
   useEffect(() => {
     const getContact = async () => {
       const data = await getAllContacts(getUserId() as string);
       setContacts(data);
     };
     getContact();
+    // 清除消息计数
+    changeMsgNum(0);
   }, []);
 
   useEffect(() => {

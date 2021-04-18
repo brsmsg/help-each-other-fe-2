@@ -4,7 +4,7 @@ import style from '@/assets/gloabalStyle';
 import React, { useContext, useEffect, useState } from 'react';
 import { getMsgHistory } from './service';
 import { ChatBoxWrapprer } from './style';
-import { WSContext } from '@/pages/BasicLayout';
+import { MSGContext, WSContext } from '@/pages/BasicLayout';
 const { Chat } = require('react-jwchat');
 
 interface ChatBoxProps {
@@ -17,9 +17,9 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
   const [history, setHistory] = useState([]);
 
   const ws = useContext(WSContext);
+  const { msg, changeMsgNum } = useContext(MSGContext);
 
   ws.on('message', (data: any) => {
-    console.log('chat Message', data);
     const newHistory = [
       ...history,
       {
@@ -31,7 +31,6 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
         content: data.message.content,
       },
     ] as any;
-    console.log(newHistory);
     setHistory(newHistory);
   });
 
