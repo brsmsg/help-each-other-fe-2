@@ -54,6 +54,7 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
   const onSend = (message: any) => {
     message.receiver = chatUser;
     ws.emit('message', message);
+    console.log('msg', message);
     const newHistory = [
       ...history,
       {

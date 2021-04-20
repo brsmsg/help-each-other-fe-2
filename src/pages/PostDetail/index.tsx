@@ -1,5 +1,6 @@
 import React, {
   TextareaHTMLAttributes,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -31,11 +32,12 @@ import {
   changeApplySatus,
   addViewNum,
 } from './service';
-import { getUserId } from '@/utils/currentUser';
+import { getUser, getUserId } from '@/utils/currentUser';
 import style from '@/assets/gloabalStyle';
 import { getUserStat } from '@/components/UserDetail/service';
 import { PREFIX } from '@/utils/constants';
 import { SmileOutlined } from '@ant-design/icons';
+import { WSContext } from '../BasicLayout';
 interface PostDetail extends RouteComponentProps {
   post: PostModelState;
   loading: boolean;
@@ -57,6 +59,8 @@ const PostDetail: React.FC<PostDetail> = (props) => {
   const [refresh, setRefresh] = useState(false);
   const [userStat, setUserStat] = useState();
   const images = useRef<any>(null);
+
+  const ws = useContext(WSContext);
 
   useEffect(() => {
     const { id } = match.params as any;
@@ -136,6 +140,16 @@ const PostDetail: React.FC<PostDetail> = (props) => {
     if (res.errno === 0) {
       message.success('申请已发送');
       setApplyStatus(1);
+      console.log(post);
+      const msg = {
+        message: {
+          type: 'text',
+          content: text,
+        },
+        receiver: { id: post.user?.id },
+        user: getUser(),
+      };
+      ws.emit('message', msg);
     } else {
       message.error('申请失败，清重试');
     }
