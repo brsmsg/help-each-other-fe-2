@@ -17,3 +17,14 @@ export const getAllAdminMessages = async (userId: string) => {
   }
   return data;
 };
+
+export const checkMessages = async (params: any) => {
+  const res = await request(`users/checkMessages`, {
+    method: 'GET',
+    params,
+  });
+  if (res.errno === 0) {
+    return res.data;
+  }
+  return null;
+};

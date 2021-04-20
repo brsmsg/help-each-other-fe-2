@@ -1,23 +1,27 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { ContactWrapper, MessageListWrapper, MessageWrapper } from './style';
-import { Card, List, Avatar } from 'antd';
+import { Card, List, Avatar, Badge } from 'antd';
 import { PREFIX } from '@/utils/constants';
-import { getAllAdminMessages, getAllContacts } from './service';
+import { getAllAdminMessages, getAllContacts, checkMessages } from './service';
 import { getUserId } from '@/utils/currentUser';
 import style from '@/assets/gloabalStyle';
 import { Link } from '@umijs/runtime';
 import ChatBox from '@/components/ChatBox';
-import { MSGContext } from '@/pages/BasicLayout';
+import { MSGContext, WSContext } from '@/pages/BasicLayout';
+import { useImmer } from 'use-immer';
+import FormItem from '@/components/FormItem';
 
 interface MessageProps {}
 
 const Message: React.FC<MessageProps> = (props) => {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useImmer([]);
   const [adminMessages, setAdminMessages] = useState([]);
   const [isChat, setIsChat] = useState(false);
   const [chatUser, setChatUser] = useState();
 
   const { msg, changeMsgNum } = useContext(MSGContext);
+
+  const ws = useContext(WSContext);
 
   useEffect(() => {
     const getContact = async () => {
@@ -37,6 +41,17 @@ const Message: React.FC<MessageProps> = (props) => {
     getAdminMessages();
   }, []);
 
+  const checkAllMessgae = async (id: any) => {
+    setContacts((contacts) => {
+      contacts.forEach((item: any) => {
+        if (item.user.id === id) {
+          item.length = 0;
+        }
+      });
+    });
+    await checkMessages({ id1: id, id2: getUserId() });
+  };
+
   return (
     <MessageWrapper>
       <ContactWrapper>
@@ -50,11 +65,15 @@ const Message: React.FC<MessageProps> = (props) => {
                 onClick={() => {
                   setIsChat(true);
                   setChatUser(item.user);
+                  checkAllMessgae(item.user.id);
                 }}
               >
                 <List.Item.Meta
+                  style={{ cursor: 'pointer ' }}
                   avatar={
-                    <Avatar src={`${PREFIX}${item.user?.avatar}`} size={40} />
+                    <Badge count={item.length} size="small" offset={[-5, 5]}>
+                      <Avatar src={`${PREFIX}${item.user?.avatar}`} size={40} />
+                    </Badge>
                   }
                   title={
                     <div style={{ color: `${style['theme-color']}` }}>
@@ -88,7 +107,13 @@ const Message: React.FC<MessageProps> = (props) => {
                       系统管理员消息
                     </Link>
                   }
-                  description={<span>{item.content}</span>}
+                  description={
+                    <Link to={`/post/${item.postId}`}>
+                      <span style={{ color: `${style['text-color-deep']}` }}>
+                        {item.content.split('&')[0]}
+                      </span>
+                    </Link>
+                  }
                 />
               </List.Item>
             )}

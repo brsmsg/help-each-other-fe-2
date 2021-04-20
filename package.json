@@ -29,7 +29,8 @@
     "socket.io": "^4.0.1",
     "socket.io-client": "^4.0.1",
     "styled-components": "^5.2.1",
-    "umi": "^3.3.9"
+    "umi": "^3.3.9",
+    "use-immer": "^0.5.1"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",

@@ -52,7 +52,6 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
   }, [chatUser]);
 
   const onSend = (message: any) => {
-    console.log(message);
     message.receiver = chatUser;
     ws.emit('message', message);
     const newHistory = [
@@ -60,7 +59,7 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
       {
         id: message.id,
         user: getUser(),
-        createdAt: new Date(),
+        updatedAt: new Date(),
         receiver_id: message.receiver.id,
         sender_id: message.user.id,
         content: message.message.content,
@@ -69,17 +68,10 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
     setHistory(newHistory);
   };
 
-  // content: 'hhh';
-  // createdAt: '2021-03-05T07:09:06.000Z';
-  // id: 1;
-  // is_check: false;
-  // receiver_id: 2;
-  // sender_id: 1;
-  // updatedAt: '2021-03-05T07:09:06.000Z';
   const formatData = (message: any) => {
     const newMessage = {
       _id: message.id,
-      date: new Date(message.createdAt).getTime(),
+      date: new Date(message.updatedAt).getTime() / 1000,
       user: {
         id: message.sender_id,
         avatar: `${PREFIX}${message.user.avatar}`,
@@ -99,11 +91,6 @@ const ChatBox: React.FC<ChatBoxProps> = (props) => {
         me={getUser()}
         chatList={(history as any).map((item: any) => formatData(item))}
         onSend={onSend}
-        // style={{
-        // width: '90%',
-        // height: '90%',
-        // backgroundColor: `${style['theme-color']}`,
-        // }}
       ></Chat>
     </ChatBoxWrapprer>
   );

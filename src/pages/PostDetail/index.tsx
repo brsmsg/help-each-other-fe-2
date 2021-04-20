@@ -56,7 +56,7 @@ const PostDetail: React.FC<PostDetail> = (props) => {
   const [memberList, setMemberList] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [userStat, setUserStat] = useState();
-  const images = useRef<any[]>([]);
+  const images = useRef<any>(null);
 
   useEffect(() => {
     const { id } = match.params as any;
@@ -69,10 +69,10 @@ const PostDetail: React.FC<PostDetail> = (props) => {
   }, []);
 
   useEffect(() => {
-    images.current = post.images
-      ?.split('&')
-      .map((item) => `${PREFIX}${item}`) as any[];
-    console.log(images);
+    if (post.images)
+      images.current = post.images
+        ?.split('&')
+        .map((item) => `${PREFIX}${item}`) as any[];
   }, [post]);
 
   // 浏览量+1
@@ -263,7 +263,7 @@ const PostDetail: React.FC<PostDetail> = (props) => {
             {images.current ? (
               <ImageWrapper>
                 <span>图片</span>
-                {images.current.map((item) => {
+                {images.current.map((item: any) => {
                   return (
                     <div style={{ margin: 20 }}>
                       <Image src={item} width={'100%'} />
