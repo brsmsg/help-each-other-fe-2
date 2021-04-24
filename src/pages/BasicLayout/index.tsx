@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Musk, TopBarWrapper } from './style';
-import { Avatar, Button, Dropdown, Menu, Badge } from 'antd';
+import { Avatar, Button, Dropdown, Menu, Badge, Image } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import Login from '../Login';
 import { IconStyle } from '../../assets/iconfont/iconfont';
@@ -99,7 +99,13 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
         <TopBarWrapper>
           <div className="top_bar">
             <Link to="/">
-              <div style={{ color: 'blue' }}>标题logo</div>
+              {/* <div style={{ color: 'blue' }}>标题logo</div> */}
+              <div style={{ overflow: 'hidden', height: '50px' }}>
+                <img
+                  src={require('../../assets/imgs/logo.png')}
+                  style={{ width: '12vw', transform: 'translateY(-33%)' }}
+                />
+              </div>
             </Link>
             <div className="nav_bar">
               <Link to="/">

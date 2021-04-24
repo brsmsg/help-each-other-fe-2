@@ -26,7 +26,7 @@ export const PostList: React.FC<PostListProps> = (props) => {
                 <li>
                   <div className="create_at">
                     {/* {new Date(item.createdAt).toLocaleTimeString()} */}
-                    {item.createdAt}
+                    {new Date(item.createdAt).toLocaleString()}
                   </div>
                 </li>
                 <li>
@@ -34,7 +34,6 @@ export const PostList: React.FC<PostListProps> = (props) => {
                 </li>
               </ul>
 
-              {/* <div className="content">{item.content}</div> */}
               <ul className="other_info">
                 <li>
                   <i className="iconfont">&#xe6df;</i>
