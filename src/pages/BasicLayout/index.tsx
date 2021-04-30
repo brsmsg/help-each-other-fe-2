@@ -99,7 +99,6 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
         <TopBarWrapper>
           <div className="top_bar">
             <Link to="/">
-              {/* <div style={{ color: 'blue' }}>标题logo</div> */}
               <div style={{ overflow: 'hidden', height: '50px' }}>
                 <img
                   src={require('../../assets/imgs/logo.png')}
@@ -153,7 +152,6 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
                       icon={<UserOutlined />}
                       src={`http://localhost:3001${getUser()?.avatar}`}
                     />
-
                     <span>{getUser().username}</span>
                   </div>
                 </Dropdown>
@@ -163,6 +161,7 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
                 <Button
                   className="register"
                   onClick={() => {
+                    setStatus(false);
                     setIsShow(true);
                   }}
                 >
@@ -171,6 +170,7 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
                 <Button
                   className="login"
                   onClick={() => {
+                    setStatus(true);
                     setIsShow(true);
                   }}
                 >

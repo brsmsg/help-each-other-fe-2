@@ -30,7 +30,6 @@ export const TopBarWrapper = styled.div`
     }
     .avatar_wrapper {
       height: 50px;
-      max-width: 150px;
       align-self: center;
       margin: 0 15px;
       cursor: pointer;
