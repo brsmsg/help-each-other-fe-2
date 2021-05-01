@@ -7,15 +7,34 @@ export const TopBarWrapper = styled.div`
   width: 100vw;
   .top_bar {
     width: 960px;
+    @media (max-width: 768px) {
+      width: 100%;
+    }
     height: 100%;
     display: flex;
     justify-content: space-around;
     line-height: 30px;
     margin: 0 auto;
+    .logo {
+      @media (max-width: 768px) {
+        transform: translateY(-5px);
+      }
+      img {
+        width: 125px;
+        transform: translateY(-28%);
+        @media (max-width: 768px) {
+          width: 70px;
+          transform: scale(1.4);
+        }
+      }
+    }
     .nav_bar {
       /* background-color: red; */
       height: 100%;
       width: 70%;
+      @media (max-width: 768px) {
+        width: 40%;
+      }
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -23,9 +42,19 @@ export const TopBarWrapper = styled.div`
       div {
         color: ${style['text-color-deep']};
         margin: 0 20px;
+        @media (max-width: 768px) {
+          margin: 0 5px;
+        }
         &.active {
           color: ${style['theme-color']};
         }
+      }
+    }
+    .message {
+      align-self: center;
+      margin-right: 50px;
+      @media (max-width: 768px) {
+        margin-right: 0;
       }
     }
     .avatar_wrapper {
@@ -35,7 +64,10 @@ export const TopBarWrapper = styled.div`
       cursor: pointer;
       display: flex;
       align-items: center;
-      span {
+      .name {
+        @media (max-width: 768px) {
+          display: none;
+        }
         font-size: 25px;
         margin-left: 10px;
       }

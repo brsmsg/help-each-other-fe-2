@@ -99,10 +99,10 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
         <TopBarWrapper>
           <div className="top_bar">
             <Link to="/">
-              <div style={{ overflow: 'hidden', height: '50px' }}>
+              <div className="logo" style={{ overflow: 'hidden', height: '50px' }}>
                 <img
                   src={require('../../assets/imgs/logo.png')}
-                  style={{ width: '12vw', transform: 'translateY(-33%)' }}
+                  // style={{ width: '12vw', transform: 'translateY(-33%)' }}
                 />
               </div>
             </Link>
@@ -129,7 +129,7 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
             </div>
             {isLogin ? (
               <>
-                <div style={{ alignSelf: 'center', marginRight: 50 }}>
+                <div className="message">
                   <Link to={`/message/${getUserId()}`}>
                     <Badge count={msg} size="small">
                       <Button
@@ -152,7 +152,7 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
                       icon={<UserOutlined />}
                       src={`http://localhost:3001${getUser()?.avatar}`}
                     />
-                    <span>{getUser().username}</span>
+                    <span className="name">{getUser().username}</span>
                   </div>
                 </Dropdown>
               </>

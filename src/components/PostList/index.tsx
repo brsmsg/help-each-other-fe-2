@@ -3,6 +3,7 @@ import { ListWrapper, PostItem } from './style';
 import { PostModelState } from '@/pages/PostDetail/model';
 import { Image } from 'antd';
 import { PREFIX } from '@/utils/constants';
+import { formatTime } from '@/utils/util';
 
 interface PostListProps {
   posts: PostModelState[];
@@ -25,8 +26,7 @@ export const PostList: React.FC<PostListProps> = (props) => {
                 </li>
                 <li>
                   <div className="create_at">
-                    {/* {new Date(item.createdAt).toLocaleTimeString()} */}
-                    {new Date(item.createdAt).toLocaleString()}
+                    {formatTime(new Date(item.createdAt))}
                   </div>
                 </li>
                 <li>
@@ -45,7 +45,10 @@ export const PostList: React.FC<PostListProps> = (props) => {
                 </li>
               </ul>
             </div>
-            <div className="item_right">
+            <div
+              className="item_right"
+              style={{ display: item.images ? 'block' : 'none' }}
+            >
               {item.images ? (
                 <Image
                   src={`${PREFIX}${item.images?.split('&')[0]}`}

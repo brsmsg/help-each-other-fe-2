@@ -4,6 +4,9 @@ import style from '@/assets/gloabalStyle';
 export const ListWrapper = styled.div`
   background-color: #fff;
   width: 700px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const PostItem = styled.div`
@@ -20,6 +23,9 @@ export const PostItem = styled.div`
     flex-direction: column;
     justify-content: center;
     padding: 10px 50px;
+    @media (max-width: 768px) {
+      padding: 0 20px;
+    }
     .title {
       margin-top: 10px;
       font-size: 1.3rem;

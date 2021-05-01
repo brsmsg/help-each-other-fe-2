@@ -6,10 +6,16 @@ export const HomeWrapper = styled.div`
   /* height: 100px; */
   margin: 10px auto;
   position: relative;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const PostListWrapper = styled.div`
   width: 700px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
   /* height: 1000px; */
   background-color: #ffffff;
   position: absolute;
@@ -41,4 +47,7 @@ export const UserListWrapper = styled.div`
   position: absolute;
   right: 0;
   top: 0;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;

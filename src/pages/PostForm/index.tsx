@@ -89,7 +89,7 @@ export const PostForm: React.FC<PostFormProps> = (props) => {
               ></Input>
             </Form.Item>
             <Form.Item name="content" label="内容">
-              <TextArea style={{ width: 400, height: 300 }} />
+              <TextArea  className="textarea"/>
             </Form.Item>
             <Form.Item name="image" label="图片">
               <Upload
@@ -103,7 +103,7 @@ export const PostForm: React.FC<PostFormProps> = (props) => {
               </Upload>
             </Form.Item>
             <Form.Item style={{ textAlign: 'center' }}>
-              <Button htmlType="submit" style={{ width: 300 }}>
+              <Button htmlType="submit" className="submit">
                 提交
               </Button>
             </Form.Item>
@@ -111,7 +111,9 @@ export const PostForm: React.FC<PostFormProps> = (props) => {
         </Card>
       </FormWrapper>
 
-      <UserDetail title="用户信息" />
+      <div className="detail">
+        <UserDetail title="用户信息" id={getUserId()} />
+      </div>
     </PostFormWrapper>
   );
 };

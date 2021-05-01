@@ -51,21 +51,6 @@ const Home: React.FC<HomeProps> = (props) => {
     }
   };
 
-  const data = [
-    {
-      title: 'Ant Design Title 1',
-    },
-    {
-      title: 'Ant Design Title 2',
-    },
-    {
-      title: 'Ant Design Title 3',
-    },
-    {
-      title: 'Ant Design Title 4',
-    },
-  ];
-
   return (
     <>
       <NavBar tags={tags} type={type} getPost={getPost}></NavBar>
