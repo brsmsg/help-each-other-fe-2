@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { HomeWrapper, PostListWrapper, UserListWrapper } from './style';
-import { RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import NavBar from '@/components/NavBar';
 import PostList from '@/components/PostList';
 import { tagEnumReverse } from '@/utils/enum';
-import { getPostRequest } from './service';
+import { getPostRequest, getTopUsers } from './service';
 import { Card, List, Avatar } from 'antd';
+import { PREFIX } from '@/utils/constants';
 
 interface HomeProps extends RouteComponentProps {}
 const Home: React.FC<HomeProps> = (props) => {
@@ -15,6 +16,8 @@ const Home: React.FC<HomeProps> = (props) => {
   const newestRef = useRef<HTMLElement>(null);
   const [type, setType] = useState('');
 
+  const [topUsers, setTopUsers] = useState([]);
+
   const getPost = async (tag: any, type: string) => {
     // @ts-ignore
     const newPosts = await getPostRequest({ tag: tagEnumReverse[tag], type });
@@ -22,6 +25,15 @@ const Home: React.FC<HomeProps> = (props) => {
       setPosts(newPosts.data);
     }
   };
+
+  const getTop = async () => {
+    const res = await getTopUsers();
+    if (res.errno === 0) setTopUsers(res.data);
+  };
+
+  useEffect(() => {
+    getTop();
+  }, []);
 
   const handlePostClick = (id: string) => {
     props.history.push(`post/${id}`);
@@ -82,17 +94,17 @@ const Home: React.FC<HomeProps> = (props) => {
           <Card title="活跃用户">
             <List
               itemLayout="horizontal"
-              dataSource={data}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    }
-                    title={<a href="https://ant.design">{item.title}</a>}
-                    description="Ant Design"
-                  />
-                </List.Item>
+              dataSource={topUsers}
+              renderItem={(item: any) => (
+                <Link to={`/userInfo/${item.id}`}>
+                  <List.Item>
+                    <List.Item.Meta
+                      avatar={<Avatar src={`${PREFIX}${item.avatar}`} />}
+                      title={<a>{item.username}</a>}
+                      description={item.location}
+                    />
+                  </List.Item>
+                </Link>
               )}
             ></List>
           </Card>

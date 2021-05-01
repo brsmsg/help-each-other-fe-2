@@ -34,7 +34,7 @@ const UserInfo: React.FC<UserInfoPost> = (props) => {
       <Head>个人帖子</Head>
       <PostList posts={posts} handlePostClick={handlePostClick}></PostList>
 
-      <UserDetail title="个人信息"></UserDetail>
+      <UserDetail title="个人信息" id={(match.params as any).id}></UserDetail>
     </UserInfoWrapper>
   );
 };

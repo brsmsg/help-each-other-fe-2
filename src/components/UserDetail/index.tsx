@@ -3,24 +3,34 @@ import { Card, Avatar } from 'antd';
 import { DetailWrapper } from './style';
 import { Link } from '@umijs/runtime';
 import { LoginModelState } from '@/pages/Login/model';
-import { getUserId } from '@/utils/currentUser';
-import { getUserStat } from './service';
+import { getUserInfo, getUserStat } from './service';
+import { PREFIX } from '@/utils/constants';
 
 interface UserDetailProps {
   title: string;
+  id: any;
 }
 const { Meta } = Card;
 
 const UserDetail: React.FC<UserDetailProps> = (props) => {
-  const { title } = props;
+  const { title, id } = props;
   const [user, setUser] = useState<LoginModelState>();
   const [userStat, setUserStat] = useState<any>();
+
+  const getUser = async () => {
+    const res = await getUserInfo(id);
+    if (res.errno === 0) {
+      const { data } = res;
+      setUser(data);
+      console.log(data);
+    }
+  };
+
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem('currentUser') as string));
+    getUser();
   }, []);
 
   useEffect(() => {
-    const id = getUserId();
     const getUserStatAsync = async () => {
       const res = await getUserStat({ id });
       if (res.errno === 0) {
@@ -29,19 +39,17 @@ const UserDetail: React.FC<UserDetailProps> = (props) => {
     };
     getUserStatAsync();
   }, []);
+
   return (
     <DetailWrapper>
       <Card title={title} bordered={true}>
         <Link to={`../userInfo/${1}`}>
           <Meta
-            avatar={
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-            }
+            avatar={<Avatar src={`${PREFIX}${user?.avatar}`} />}
             title={user?.username}
             description={<span></span>}
           ></Meta>
         </Link>
-
         <div className="stat">所属区域: {user?.location}</div>
         <div className="stat">发布请求数: {userStat?.postNum} 个</div>
         <div className="stat">帮助他人次数: {userStat?.helpNum} 次</div>

@@ -7,3 +7,7 @@ export const getUserStat = (params: any) => {
   };
   return request(`users/userStat/${id}`, requestConfig);
 };
+
+export const getUserInfo = (id: string) => {
+  return request(`users/userInfo/${id}`);
+};

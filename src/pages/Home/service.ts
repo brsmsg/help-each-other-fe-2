@@ -7,3 +7,7 @@ export const getPostRequest = (params: any) => {
   };
   return request('post', requestConfig);
 };
+
+export const getTopUsers = () => {
+  return request('users/topUsers');
+};

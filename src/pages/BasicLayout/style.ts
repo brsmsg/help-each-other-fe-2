@@ -4,7 +4,7 @@ import style from '@/assets/gloabalStyle';
 export const TopBarWrapper = styled.div`
   height: 50px;
   background-color: #fff;
-  width: 100%px;
+  width: 100vw;
   .top_bar {
     width: 960px;
     height: 100%;
