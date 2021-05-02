@@ -38,6 +38,7 @@ import { getUserStat } from '@/components/UserDetail/service';
 import { PREFIX } from '@/utils/constants';
 import { SmileOutlined } from '@ant-design/icons';
 import { WSContext } from '../BasicLayout';
+import { formatTime } from '@/utils/util';
 interface PostDetail extends RouteComponentProps {
   post: PostModelState;
   loading: boolean;
@@ -261,7 +262,7 @@ const PostDetail: React.FC<PostDetail> = (props) => {
             title={post.user?.username}
             description={
               <>
-                <span>发布于: {post.createdAt} </span>
+                <span>发布于: {formatTime(new Date(post.createdAt))} </span>
                 <span>
                   报酬: {post.reward ? `¥${post.reward}` : '自行商议'}
                 </span>

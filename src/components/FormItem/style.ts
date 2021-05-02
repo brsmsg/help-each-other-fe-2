@@ -14,12 +14,21 @@ export const FormImtemWrapper = styled.div`
   font-size: 16px;
   .label {
     width: 75px;
+    @media (max-width: 768px) {
+      width: 100px;
+    }
   }
   .input {
     width: 250px;
+    @media (max-width: 768px) {
+      width: 125px;
+    }
   }
   .suffix {
     width: 100px;
+    @media (max-width: 768px) {
+      width: 200px;
+    }
   }
   i {
     color: ${style['theme-color']};

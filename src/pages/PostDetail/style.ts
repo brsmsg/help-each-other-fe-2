@@ -3,10 +3,16 @@ import style from '@/assets/gloabalStyle';
 
 export const PostWrapper = styled.div`
   width: 960px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
   height: 100px;
   margin: 20px auto;
   position: relative;
   .post_detail {
+    @media (max-width: 768px) {
+      width: 100%;
+    }
     width: 700px;
     background-color: #ffffff;
     position: absolute;
@@ -42,6 +48,9 @@ export const PostWrapper = styled.div`
   }
 
   .author_detail {
+    @media (max-width: 768px) {
+      display: none;
+    }
     width: 240px;
     /* height: 300px; */
     background-color: #ffffff;

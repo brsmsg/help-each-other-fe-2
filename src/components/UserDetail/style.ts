@@ -11,4 +11,7 @@ export const DetailWrapper = styled.div`
     /* text-align: center; */
     margin: 20px 0 0;
   }
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;

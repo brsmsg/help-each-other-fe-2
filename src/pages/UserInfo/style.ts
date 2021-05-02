@@ -6,9 +6,15 @@ export const UserInfoWrapper = styled.div`
   /* height: 100px; */
   margin: 20px auto;
   position: relative;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const Head = styled.div`
+  @media (max-width: 768px) {
+    width: 100%;
+  }
   width: 700px;
   height: 60px;
   background: #fff;

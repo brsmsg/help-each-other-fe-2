@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { ContactWrapper, MessageListWrapper, MessageWrapper } from './style';
 import { Card, List, Avatar, Badge } from 'antd';
 import { PREFIX } from '@/utils/constants';
@@ -9,7 +9,6 @@ import { Link } from '@umijs/runtime';
 import ChatBox from '@/components/ChatBox';
 import { MSGContext, WSContext } from '@/pages/BasicLayout';
 import { useImmer } from 'use-immer';
-import FormItem from '@/components/FormItem';
 
 interface MessageProps {}
 
@@ -20,6 +19,10 @@ const Message: React.FC<MessageProps> = (props) => {
   const [chatUser, setChatUser] = useState();
 
   const { msg, changeMsgNum } = useContext(MSGContext);
+  // const { msgType, setMsgType } = useState("");
+  const [isShowContact, setIsShowContact] = useState(true);
+  const contactRef = useRef<HTMLElement>();
+  const adminRef = useRef<HTMLElement>();
 
   const ws = useContext(WSContext);
 
@@ -52,9 +55,15 @@ const Message: React.FC<MessageProps> = (props) => {
     await checkMessages({ id1: id, id2: getUserId() });
   };
 
+  // const toggleMsg = () => {
+  //   const contact = contactRef.current;
+  //   console.log(contact);
+  //   const admin = adminRef.current;
+  // };
+
   return (
     <MessageWrapper>
-      <ContactWrapper>
+      <ContactWrapper ref={contactRef}>
         <Card title="联系人">
           <List
             itemLayout="horizontal"
@@ -95,7 +104,12 @@ const Message: React.FC<MessageProps> = (props) => {
         <ChatBox chatUser={chatUser}></ChatBox>
       ) : (
         <MessageListWrapper>
-          <div className="title">消息记录</div>
+          <div className="title">
+            <span>消息记录</span>
+            <span className="user_msg">
+              查看用户消息
+            </span>
+          </div>
           <List
             style={{ borderBottom: `1px solid ${style['border-color']}` }}
             dataSource={adminMessages}
