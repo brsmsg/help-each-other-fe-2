@@ -21,8 +21,10 @@ export const ContactWrapper = styled.div`
   background: #fff;
   height: 100px;
   @media (max-width: 768px) {
-    display: none;
+    width: 100%;
   }
+  display: ${(props: { isContact: boolean }) =>
+    props.isContact ? '' : 'none'};
 `;
 
 export const MessageListWrapper = styled.div`
@@ -35,6 +37,8 @@ export const MessageListWrapper = styled.div`
   width: 700px;
   min-height: 610px;
   background: white;
+  display: ${(props: { isContact: boolean }) =>
+    props.isContact ? 'none' : ''};
   .title {
     height: 58px;
     border-bottom: solid 1px ${style['border-color']};

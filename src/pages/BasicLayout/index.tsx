@@ -12,6 +12,7 @@ import webSocket, { Socket } from 'socket.io-client';
 
 export const WSContext = React.createContext(null as any);
 export const MSGContext = React.createContext(null as any);
+export const isMobileContext = React.createContext(false);
 
 const BasicLayout: React.FC<RouteComponentProps> = (props) => {
   const { location } = props;
@@ -26,10 +27,18 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
   const [msg, setMsgCount] = useState(0);
   const msgCount = useRef(0);
 
+  const [isMobile, setIsMobile] = useState(false);
+
   const connectWebSocket = () => {
     //開啟
     setWs(webSocket('http://localhost:3001'));
   };
+
+  useEffect(() => {
+    const h = window.innerHeight;
+    const w = window.innerWidth;
+    setIsMobile(h > w);
+  }, []);
 
   useEffect(() => {
     const id = getUserId();
@@ -92,105 +101,114 @@ const BasicLayout: React.FC<RouteComponentProps> = (props) => {
   );
 
   return (
-    <WSContext.Provider value={ws}>
-      <MSGContext.Provider value={{ msg, changeMsgNum }}>
-        <GlobalStyle></GlobalStyle>
-        <IconStyle></IconStyle>
-        <TopBarWrapper>
-          <div className="top_bar">
-            <Link to="/">
-              <div className="logo" style={{ overflow: 'hidden', height: '50px' }}>
-                <img
-                  src={require('../../assets/imgs/logo.png')}
-                  // style={{ width: '12vw', transform: 'translateY(-33%)' }}
-                />
-              </div>
-            </Link>
-            <div className="nav_bar">
+    <isMobileContext.Provider value={isMobile}>
+      <WSContext.Provider value={ws}>
+        <MSGContext.Provider value={{ msg, changeMsgNum }}>
+          <GlobalStyle></GlobalStyle>
+          <IconStyle></IconStyle>
+          <TopBarWrapper>
+            <div className="top_bar">
               <Link to="/">
                 <div
-                  className={
-                    location.pathname === '/home' ? 'active' : undefined
-                  }
+                  className="logo"
+                  style={{ overflow: 'hidden', height: '50px' }}
                 >
-                  首页
+                  <img
+                    src={require('../../assets/imgs/logo.png')}
+                    // style={{ width: '12vw', transform: 'translateY(-33%)' }}
+                  />
                 </div>
               </Link>
-              <Link to="/writePost">
-                <div
-                  className={
-                    location.pathname === '/writePost' ? 'active' : undefined
-                  }
-                >
-                  发帖
-                </div>
-              </Link>
-              <div>反馈</div>
-            </div>
-            {isLogin ? (
-              <>
-                <div className="message">
-                  <Link to={`/message/${getUserId()}`}>
-                    <Badge count={msg} size="small">
-                      <Button
-                        className="message"
-                        style={{
-                          color: '#fff',
-                          backgroundColor: style['theme-color'],
-                        }}
-                      >
-                        消息中心
-                      </Button>
-                    </Badge>
-                  </Link>
-                </div>
-
-                <Dropdown overlay={dropDownMenu} placement="bottomCenter" arrow>
-                  <div className="avatar_wrapper">
-                    <Avatar
-                      size={40}
-                      icon={<UserOutlined />}
-                      src={`http://localhost:3001${getUser()?.avatar}`}
-                    />
-                    <span className="name">{getUser().username}</span>
+              <div className="nav_bar">
+                <Link to="/">
+                  <div
+                    className={
+                      location.pathname === '/home' ? 'active' : undefined
+                    }
+                  >
+                    首页
                   </div>
-                </Dropdown>
-              </>
-            ) : (
-              <div className="button_wrapper">
-                <Button
-                  className="register"
-                  onClick={() => {
-                    setStatus(false);
-                    setIsShow(true);
-                  }}
-                >
-                  注册
-                </Button>
-                <Button
-                  className="login"
-                  onClick={() => {
-                    setStatus(true);
-                    setIsShow(true);
-                  }}
-                >
-                  登录
-                </Button>
+                </Link>
+                <Link to="/writePost">
+                  <div
+                    className={
+                      location.pathname === '/writePost' ? 'active' : undefined
+                    }
+                  >
+                    发帖
+                  </div>
+                </Link>
+                <div>反馈</div>
               </div>
-            )}
-          </div>
-        </TopBarWrapper>
-        <Musk onClick={() => toggleShow(false)} show={isShow} />
-        <Login
-          show={isShow}
-          toggleShow={toggleShow}
-          status={status}
-          toggleStatus={toggleStatus}
-          toggleIsLogin={toggleIsLogin}
-        />
-        {props.children}
-      </MSGContext.Provider>
-    </WSContext.Provider>
+              {isLogin ? (
+                <>
+                  <div className="message">
+                    <Link to={`/message/${getUserId()}`}>
+                      <Badge count={msg} size="small">
+                        <Button
+                          className="message"
+                          style={{
+                            color: '#fff',
+                            backgroundColor: style['theme-color'],
+                          }}
+                        >
+                          消息中心
+                        </Button>
+                      </Badge>
+                    </Link>
+                  </div>
+
+                  <Dropdown
+                    overlay={dropDownMenu}
+                    placement="bottomCenter"
+                    arrow
+                  >
+                    <div className="avatar_wrapper">
+                      <Avatar
+                        size={40}
+                        icon={<UserOutlined />}
+                        src={`http://localhost:3001${getUser()?.avatar}`}
+                      />
+                      <span className="name">{getUser().username}</span>
+                    </div>
+                  </Dropdown>
+                </>
+              ) : (
+                <div className="button_wrapper">
+                  <Button
+                    className="register"
+                    onClick={() => {
+                      setStatus(false);
+                      setIsShow(true);
+                    }}
+                  >
+                    注册
+                  </Button>
+                  <Button
+                    className="login"
+                    onClick={() => {
+                      setStatus(true);
+                      setIsShow(true);
+                    }}
+                  >
+                    登录
+                  </Button>
+                </div>
+              )}
+            </div>
+          </TopBarWrapper>
+          <Musk onClick={() => toggleShow(false)} show={isShow} />
+          <Login
+            show={isShow}
+            toggleShow={toggleShow}
+            status={status}
+            toggleStatus={toggleStatus}
+            toggleIsLogin={toggleIsLogin}
+          />
+          {props.children}
+        </MSGContext.Provider>
+      </WSContext.Provider>
+    </isMobileContext.Provider>
   );
 };
 

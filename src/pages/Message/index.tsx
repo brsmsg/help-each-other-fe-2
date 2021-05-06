@@ -7,7 +7,7 @@ import { getUserId } from '@/utils/currentUser';
 import style from '@/assets/gloabalStyle';
 import { Link } from '@umijs/runtime';
 import ChatBox from '@/components/ChatBox';
-import { MSGContext, WSContext } from '@/pages/BasicLayout';
+import { MSGContext, WSContext, isMobileContext } from '@/pages/BasicLayout';
 import { useImmer } from 'use-immer';
 
 interface MessageProps {}
@@ -17,14 +17,14 @@ const Message: React.FC<MessageProps> = (props) => {
   const [adminMessages, setAdminMessages] = useState([]);
   const [isChat, setIsChat] = useState(false);
   const [chatUser, setChatUser] = useState();
+  const [isContact, setIsContact] = useState(false);
 
   const { msg, changeMsgNum } = useContext(MSGContext);
-  // const { msgType, setMsgType } = useState("");
-  const [isShowContact, setIsShowContact] = useState(true);
-  const contactRef = useRef<HTMLElement>();
-  const adminRef = useRef<HTMLElement>();
 
   const ws = useContext(WSContext);
+  const isMobile = useContext(isMobileContext);
+
+  // useEffect(() => {}, []);
 
   useEffect(() => {
     const getContact = async () => {
@@ -55,15 +55,13 @@ const Message: React.FC<MessageProps> = (props) => {
     await checkMessages({ id1: id, id2: getUserId() });
   };
 
-  // const toggleMsg = () => {
-  //   const contact = contactRef.current;
-  //   console.log(contact);
-  //   const admin = adminRef.current;
-  // };
+  const toggleMsg = () => {
+    setIsContact(true);
+  };
 
   return (
     <MessageWrapper>
-      <ContactWrapper ref={contactRef}>
+      <ContactWrapper isContact={isContact}>
         <Card title="联系人">
           <List
             itemLayout="horizontal"
@@ -103,10 +101,10 @@ const Message: React.FC<MessageProps> = (props) => {
       {isChat ? (
         <ChatBox chatUser={chatUser}></ChatBox>
       ) : (
-        <MessageListWrapper>
+        <MessageListWrapper isContact={isContact}>
           <div className="title">
             <span>消息记录</span>
-            <span className="user_msg">
+            <span className="user_msg" onClick={toggleMsg}>
               查看用户消息
             </span>
           </div>
