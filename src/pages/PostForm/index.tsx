@@ -70,6 +70,7 @@ export const PostForm: React.FC<PostFormProps> = (props) => {
                 <Option value="超市代购">超市代购</Option>
                 <Option value="拼车出行">拼车出行</Option>
                 <Option value="活动积赞">活动积赞</Option>
+                <Option value="物品租借">物品租借</Option>
                 <Option value="其他">其他</Option>
               </Select>
             </Form.Item>
