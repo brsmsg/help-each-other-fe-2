@@ -87,5 +87,11 @@ export const PostItem = styled.div`
     width: 100px;
     height: 100px;
     margin-right: 40px;
+    .wrapper {
+      /* width: 100%;
+      height: 100%; */
+      /* background-size: contain; */
+      background: no-repeat;
+    }
   }
 `;

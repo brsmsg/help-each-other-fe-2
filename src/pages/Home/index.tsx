@@ -10,7 +10,7 @@ import { PREFIX } from '@/utils/constants';
 
 interface HomeProps extends RouteComponentProps {}
 const Home: React.FC<HomeProps> = (props) => {
-  const tags = ['所有帖子', '代拿快递', '超市代购', '拼车出行', '活动积赞'];
+  const tags = ['所有帖子', '代拿快递', '超市代购', '拼车出行', '活动积赞', '其他'];
   const [posts, setPosts] = useState([]);
   const popularRef = useRef<HTMLElement>(null);
   const newestRef = useRef<HTMLElement>(null);

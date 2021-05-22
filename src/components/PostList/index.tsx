@@ -50,11 +50,25 @@ export const PostList: React.FC<PostListProps> = (props) => {
               style={{ display: item.images ? 'block' : 'none' }}
             >
               {item.images ? (
-                <Image
-                  src={`${PREFIX}${item.images?.split('&')[0]}`}
-                  width={'100%'}
-                  height={'100%'}
-                />
+                <div
+                  className="wrapper"
+                  style={{
+                    background: `url(${PREFIX}${
+                      item.images?.split('&')[0]
+                    }) no-repeat`,
+                    backgroundSize: 'contain',
+                    backgroundPosition: 'center',
+                    width: '100%',
+                    height: '100%',
+                  }}
+                >
+                  <Image
+                    src={`${PREFIX}${item.images?.split('&')[0]}`}
+                    width={'100%'}
+                    height={'100%'}
+                    style={{ opacity: 0 }}
+                  />
+                </div>
               ) : null}
             </div>
           </PostItem>

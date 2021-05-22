@@ -113,6 +113,7 @@ const Login: React.FC<loginProps> = (props) => {
               <div className="input_group">
                 <div className="text">
                   <input
+                    required
                     placeholder="请输入用户名"
                     className="username"
                     ref={usernameRef}
@@ -120,6 +121,7 @@ const Login: React.FC<loginProps> = (props) => {
                 </div>
                 <div className="text">
                   <input
+                    required
                     placeholder="请输入密码"
                     className="pwd"
                     ref={pwdRef}
@@ -142,10 +144,10 @@ const Login: React.FC<loginProps> = (props) => {
                   </label>
                 </div>
                 <div className="text">
-                  <input placeholder="请输入电话" ref={phoneRef} />
+                  <input placeholder="请输入电话" ref={phoneRef} required />
                 </div>
                 <div className="text">
-                  <input placeholder="武汉理工大学" ref={locationRef} />
+                  <input placeholder="请输入学校" ref={locationRef} required />
                 </div>
               </div>
               <button onClick={register}>立即注册</button>
