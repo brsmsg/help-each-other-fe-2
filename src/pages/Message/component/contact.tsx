@@ -62,6 +62,7 @@ const Contact: React.FC<MessageProps> = (props) => {
   // };
 
   return (
+    // @ts-ignore
     <ContactWrapper ref={contactRef}>
       <Card title="联系人">
         <List
