@@ -21,7 +21,7 @@ const Contact: React.FC<MessageProps> = (props) => {
   const { msg, changeMsgNum } = useContext(MSGContext);
   // const { msgType, setMsgType } = useState("");
   const [isShowContact, setIsShowContact] = useState(true);
-  const contactRef = useRef<HTMLElement>();
+  const contactRef = useRef<HTMLDivElement>();
   const adminRef = useRef<HTMLElement>();
 
   const ws = useContext(WSContext);

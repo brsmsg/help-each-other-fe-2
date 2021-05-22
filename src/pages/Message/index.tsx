@@ -44,6 +44,11 @@ const Message: React.FC<MessageProps> = (props) => {
     getAdminMessages();
   }, []);
 
+  // useEffect(() => {
+  //   if (isMobile) setIsContact(false);
+  //   else setIsContact(true);
+  // }, []);
+
   const checkAllMessgae = async (id: any) => {
     setContacts((contacts) => {
       contacts.forEach((item: any) => {
@@ -61,7 +66,7 @@ const Message: React.FC<MessageProps> = (props) => {
 
   return (
     <MessageWrapper>
-      <ContactWrapper isContact={isContact}>
+      <ContactWrapper isContact={isMobile? isContact : true}>
         <Card title="联系人">
           <List
             itemLayout="horizontal"
@@ -101,7 +106,7 @@ const Message: React.FC<MessageProps> = (props) => {
       {isChat ? (
         <ChatBox chatUser={chatUser}></ChatBox>
       ) : (
-        <MessageListWrapper isContact={isContact}>
+        <MessageListWrapper isContact={isMobile ? isContact : false}>
           <div className="title">
             <span>消息记录</span>
             <span className="user_msg" onClick={toggleMsg}>
